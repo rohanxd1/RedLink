@@ -1,36 +1,60 @@
 package com.Rohan.RedLink.controller;
 
 import com.Rohan.RedLink.dto.DonorDto;
-import com.Rohan.RedLink.entity.Donor;
-import com.Rohan.RedLink.mappers.DonorMapper;
 import com.Rohan.RedLink.service.DonorService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
-
-
+@RestController
 @RequestMapping("/donors")
 @AllArgsConstructor
-@RestController
 public class DonorController
 {
-    public final DonorService donorService;
-//    private final DonorMapper donorMapper;
 
-
+    private final DonorService donorService;
 
     @PostMapping("/create")
-    public ResponseEntity<DonorDto> createDonor(@RequestBody DonorDto donorDto)
+    public ResponseEntity<?> createDonor(@RequestBody DonorDto donorDto)
     {
         DonorDto savedDonor = donorService.createDonor(donorDto);
+
+        if (savedDonor == null)
+        {
+            String message = "Error: Unable to create donor due to invalid data or missing fields.";
+            return ResponseEntity.badRequest().body(message);
+        }
+
         return ResponseEntity.ok(savedDonor);
     }
 
+    @GetMapping
+    public ResponseEntity<?> allDonors()
+    {
+        List<DonorDto> donorDtoList = donorService.getAllDonors();
 
+        if (donorDtoList == null || donorDtoList.isEmpty())
+        {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Records Found!!");
+        }
+
+        return ResponseEntity.ok(donorDtoList);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getDonorById(@PathVariable long id)
+    {
+        DonorDto donorDto = donorService.getDonorById(id);
+
+        if (donorDto == null)
+        {
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Donor with id:"+id+" not found!!");
+        }
+
+        return ResponseEntity.ok(donorDto);
+    }
 }

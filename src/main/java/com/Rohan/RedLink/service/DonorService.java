@@ -5,28 +5,40 @@ import com.Rohan.RedLink.entity.Donor;
 import com.Rohan.RedLink.mappers.DonorMapper;
 import com.Rohan.RedLink.repository.DonorRepository;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class DonorService
 {
-    public final DonorRepository donorRepository;
 
-    public final DonorMapper donorMapper;
-
-//    public DonorService(DonorRepository donorRepository, DonorMapper donorMapper) {
-//        this.donorRepository = donorRepository;
-//        this.donorMapper = donorMapper;
-//    }
+    private final DonorRepository donorRepository;
+    private final DonorMapper donorMapper;
 
     public DonorDto createDonor(DonorDto donorDto)
     {
-        Donor donor= donorMapper.toEntity(donorDto);
-        donorRepository.save(donor);
-        return donorMapper.toDto(donor);
+        Donor donor = donorMapper.toDonor(donorDto);
+        Donor saved = donorRepository.save(donor);
+        return donorMapper.toDto(saved);
     }
+
+    public List<DonorDto> getAllDonors()
+    {
+        List<Donor> donors = donorRepository.findAll();
+        return donorMapper.toDtoList(donors);
+    }
+
+    public DonorDto getDonorById(long id)
+    {
+        Optional<Donor> donor = donorRepository.findById(id);
+
+        return donor.map(donorMapper::toDto)
+                .orElse(null);
+    }
+
+
+
 }

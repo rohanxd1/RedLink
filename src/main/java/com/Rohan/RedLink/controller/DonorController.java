@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
+
+
+@RequestMapping("/donors")
 @AllArgsConstructor
 @RestController
-@RequestMapping("/donors")
 public class DonorController
 {
-    private final DonorService donorService;
+    public final DonorService donorService;
 //    private final DonorMapper donorMapper;
 
 

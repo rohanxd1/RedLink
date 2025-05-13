@@ -5,7 +5,7 @@ import com.Rohan.RedLink.entity.Donor;
 import com.Rohan.RedLink.mappers.DonorMapper;
 import com.Rohan.RedLink.repository.DonorsRepository;
 import lombok.AllArgsConstructor;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 

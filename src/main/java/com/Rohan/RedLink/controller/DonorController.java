@@ -17,6 +17,9 @@ public class DonorController
 
     private final DonorService donorService;
 
+
+
+
     @PostMapping("/create")
     public ResponseEntity<?> createDonor(@RequestBody DonorDto donorDto)
     {
@@ -31,7 +34,7 @@ public class DonorController
         return ResponseEntity.ok(savedDonor);
     }
 
-    @GetMapping
+    @GetMapping("/view-all")
     public ResponseEntity<?> allDonors()
     {
         List<DonorDto> donorDtoList = donorService.getAllDonors();
@@ -57,4 +60,27 @@ public class DonorController
 
         return ResponseEntity.ok(donorDto);
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateDonor(@PathVariable long id,@RequestBody DonorDto updatedDonorDto)
+    {
+        DonorDto donorDto = donorService.updateDonor(id, updatedDonorDto);
+        if (donorDto==null)
+        {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Donor with id:"+id+" not found!! \nFailed to update donor.");
+        }
+        return  ResponseEntity.ok(donorDto);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteDonor(@PathVariable long id)
+    {
+        DonorDto donorDto = donorService.deleteDonor(id);
+        if (donorDto==null)
+        {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Donor with id:"+id+" not found!! \nFailed to delete donor.");
+        }
+        return  ResponseEntity.ok(donorDto);
+    }
+
 }

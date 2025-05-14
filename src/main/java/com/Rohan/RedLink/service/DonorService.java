@@ -33,11 +33,47 @@ public class DonorService
 
     public DonorDto getDonorById(long id)
     {
-        Optional<Donor> donor = donorRepository.findById(id);
+        Donor donor = donorRepository.findById(id).orElse(null);
 
-        return donor.map(donorMapper::toDto)
-                .orElse(null);
+        if (donor==null)
+        {
+            return null;
+        }
+
+        return donorMapper.toDto(donor);
     }
+
+
+    public DonorDto updateDonor(long id, DonorDto updatedDonorDto) {
+        Donor existingDonor = donorRepository.findById(id)
+                                        .orElse(null);
+        if (existingDonor!=null)
+        {
+            existingDonor.setDonorName(updatedDonorDto.getDonorName());
+            existingDonor.setDonorMail(updatedDonorDto.getDonorMail());
+            existingDonor.setDonorPh(updatedDonorDto.getDonorPh());
+            existingDonor.setDonorGroup(updatedDonorDto.getDonorGroup());
+            existingDonor.setDonorAddress(updatedDonorDto.getDonorAddress());
+
+            Donor updated = donorRepository.save(existingDonor);
+            return donorMapper.toDto(updated);
+        }
+        return null;
+    }
+
+
+    public DonorDto deleteDonor(long id)
+    {
+        Donor deletedDonor = donorRepository.findById(id).orElse(null);
+        if (deletedDonor!=null)
+        {
+            donorRepository.deleteById(id);
+            return donorMapper.toDto(deletedDonor);
+        }
+        return null;
+    }
+
+
 
 
 

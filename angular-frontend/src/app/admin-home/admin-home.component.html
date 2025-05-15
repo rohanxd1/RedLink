@@ -1,0 +1,32 @@
+<div class="header-container">
+  <div class="header">Admin Home</div>
+
+  <nav class="navbar">
+    <ul>
+      <li>
+        <a href="#" 
+           (click)="showView('inventory'); $event.preventDefault()" 
+           [class.active]="currentView === 'inventory'">Inventory</a>
+      </li>
+      <li>
+        <a href="#" 
+           (click)="showView('donors'); $event.preventDefault()" 
+           [class.active]="currentView === 'donors'">Donors</a>
+      </li>
+      <li>
+        <a href="#" 
+           (click)="showView('hospitals'); $event.preventDefault()" 
+           [class.active]="currentView === 'hospitals'">Hospitals</a>
+      </li>
+      <li>
+        <a href="#" 
+           (click)="showView('logs'); $event.preventDefault()" 
+           [class.active]="currentView === 'logs'">Logs</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<div class="content-area">
+  <app-donors *ngIf="currentView === 'donors'"></app-donors>
+</div>

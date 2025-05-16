@@ -7,7 +7,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DonorsComponent } from './donors/donors.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { HomeComponent } from './home/home.component';
-import { DonorsEditFormComponent } from './donors-edit-form/donors-edit-form.component';
+
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
     DonorsComponent,
     AdminHomeComponent,
     HomeComponent,
-    DonorsEditFormComponent
+
   ],
   imports: [
     BrowserModule,

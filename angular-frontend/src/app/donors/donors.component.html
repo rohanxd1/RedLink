@@ -87,9 +87,7 @@
       </div>
     </form>
 
-    <div *ngIf="showSuccessMessage" class="success-overlay-message">
-          Donor created successfully!
-      </div>
+    
 
     <div *ngIf="createErrorOverlay" class="error-text" style="color: red ;font-family: Arial, sans-serif; font-weight: 600; margin-bottom: -25px;">
       {{createError}}
@@ -100,18 +98,23 @@
 
   </div>
 </div>
-
 <!-- create success message -->
       <div *ngIf="showSuccessMessage" class="success-overlay-message">
           Donor created successfully!
       </div>
   <!-- create success message end -->
+   
+
+
+  
 
   </ng-container>
   
 
   <!-- Edit View -->
   <ng-container *ngIf="currentView === 'edit'">
+
+    
 
     
     <!-- allignment sheri aakan...make css class later -->
@@ -217,12 +220,25 @@
 
     <div class="button-group">
       <button class="insert-btn" (click)="deleteDonor()">Delete</button>
+      
       <button class="edit-btn" (click)="closeDeleteOverlay()">Cancel</button>
     </div>
+    <div *ngIf="deleteFailMessage" class="error-text" >Failed to delete donor</div>
+    
   </div>
 </div>
 
+  <!-- delete success message -->
+   <div *ngIf="showDeleteSuccessMessage" class="success-overlay-message">
+          Donor Deleted successfully!
+          
+      </div>
+    <!-- delete success message end -->
+    
+  
+  <!-- delete donor overlay over -->
 
   </ng-container>
+  <!-- Edit view end -->
 
 </div>

@@ -31,4 +31,15 @@ export class DonorService {
     return this.http.post<DonorDto>('http://localhost:8080/donors/create',donor);
   }
 
+  // delete donor method
+  deleteDonor(donorId: number) {
+  return this.http.delete(`http://localhost:8080/donors/delete/${donorId}`, { responseType: 'text' });
+}
+
+  // update donor
+  updateDonor(donorId:number)
+  {
+    return this.http.
+  }
+
 }

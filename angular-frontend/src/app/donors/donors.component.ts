@@ -76,7 +76,8 @@ export class DonorsComponent implements OnInit
   };
 
 
- createDonor(): void {
+ createDonor(): void 
+ {
   // Basic validation check
   if (
     !this.newDonor.donorName?.trim() ||
@@ -110,7 +111,7 @@ export class DonorsComponent implements OnInit
       this.createErrorOverlay = true;
     }
   });
-}
+ }
 
 
 
@@ -142,25 +143,79 @@ export class DonorsComponent implements OnInit
 
   // delete donor stuff
   deleteOverlay =false;
-  deletedDonor: DonorDto|null = null
+  
+  
+  deletedDonor: DonorDto=
+  {
+    donorId:0,
+    donorName: '',
+    donorGroup: '',
+    donorPh: '',
+    donorMail: '',
+    donorAddress: ''
+  };
+  deleteId=0;
   openDeleteOverlay(donor:DonorDto) : void
   {
     this.deleteOverlay=true
     this.deletedDonor=donor;
+    this.errorMessage=null;
+    if (donor.donorId !== undefined) 
+      {
+        this.deleteId = donor.donorId;
+      } else 
+      {
+         console.error("Donor ID is undefined.");
+      }
 
   }
+  deleteFailMessage=false;
+  showDeleteSuccessMessage=false;
+ deleteDonor(): void 
+  { 
+    this.donorService.deleteDonor(this.deleteId).subscribe
+    (
+      {
+        next:()=>
+          {   
+            this.deleteId=0;
+            this.backToList();
+            this.editDonor();
+            this.deleteOverlay=false;
+            this.showDeleteSuccessMessage=true;
+            setTimeout(() => {
+                                this.showDeleteSuccessMessage = false;
+                             }, 3000);
+          },
+        error:()=>
+          {
+            
+            this.deleteFailMessage=true;
+            
+          }
 
-  deleteDonor(): void 
-  {
-    this.closeDeleteOverlay();
-    this.loadDonors();
+      }
+    );
+    // this.deleteOverlay=false;
   }
-  closeDeleteOverlay() : void
+
+
+
+  closeDeleteOverlay(): void {
+  this.deleteOverlay = false;
+  this.deletedDonor = 
   {
-    this.deleteOverlay=false;
-    this.deletedDonor= null;
-    this.loadDonors();
-  }
+    donorId: 0,
+    donorName: '',
+    donorGroup: '',
+    donorPh: '',
+    donorMail: '',
+    donorAddress: ''
+  };
+}
+
+
+
   // delete donor stuff over
 
   

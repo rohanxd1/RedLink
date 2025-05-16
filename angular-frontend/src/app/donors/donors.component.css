@@ -95,7 +95,11 @@
 }
 
 .error-text {
-  text-align: center; /* Optional: center-align the error text */
+  text-align: center; 
+  color: red ;
+  font-family: Arial, sans-serif; 
+  font-weight: 600; 
+  
 }
 /* form error stuff over */
 
@@ -109,7 +113,7 @@
 }
 /* form no data present over */
 
-/* --------- New select styles added here --------- */
+/* overlay things */
 .overlay-content select {
   margin-top: 6px;
   padding: 10px 12px;

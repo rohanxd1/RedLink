@@ -37,9 +37,15 @@ export class DonorService {
 }
 
   // update donor
-  updateDonor(donorId:number)
+  updateDonor(donorId: number,donor: DonorDto): Observable<DonorDto>
   {
-    return this.http.
+    return this.http.put<DonorDto>(`http://localhost:8080/donors/update/${donorId}`,donor);
+  }
+
+  // search donor
+  findDonor(donorId:number): Observable<DonorDto>
+  {
+    return this.http.get<DonorDto>(`http://localhost:8080/donors/${donorId}`);
   }
 
 }

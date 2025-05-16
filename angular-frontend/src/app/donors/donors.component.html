@@ -7,6 +7,7 @@
     <div class="buttons-container">
       <button class="insert-btn" (click)="openOverlay()">Insert New Donor</button>
       <button class="edit-btn" (click)="editDonor()">Edit</button>
+      <button class="insert-btn" (click)="searchButton()">Search</button>
     </div>
 
     <!-- Error Message -->
@@ -88,14 +89,12 @@
     </form>
 
     
-
+    <!-- create faile message -->
     <div *ngIf="createErrorOverlay" class="error-text" style="color: red ;font-family: Arial, sans-serif; font-weight: 600; margin-bottom: -25px;">
       {{createError}}
     </div>
-
-      
-      
-
+    <!-- create success message end -->
+  
   </div>
 </div>
 <!-- create success message -->
@@ -103,10 +102,8 @@
           Donor created successfully!
       </div>
   <!-- create success message end -->
-   
-
-
   
+  <!-- Overlay for Insert -->
 
   </ng-container>
   
@@ -114,9 +111,6 @@
   <!-- Edit View -->
   <ng-container *ngIf="currentView === 'edit'">
 
-    
-
-    
     <!-- allignment sheri aakan...make css class later -->
     <div style="margin-bottom: 20px;margin-top: -30px;">
         <button  class="edit-btn" (click)="backToList()">Go back</button>
@@ -157,15 +151,15 @@
       <div class="no-data">No donors found.</div>
     </ng-template>
 
-    <!-- Edit Donor Overlay -->
-    <div *ngIf="showEditOverlay && selectedDonor" class="overlay">
+    <!-- Update Donor Overlay -->
+    <div *ngIf="showUpdateOverlay && selectedDonor" class="overlay">
       <div class="overlay-content">
         
         
         <div style="margin-bottom: -30px; margin-top: -10px;">
           <h3>Edit Donor Details</h3>
         </div>
-        <form (ngSubmit)="saveDonor()">
+        <form (ngSubmit)="updateDonor()">
           <label>
             Name:
             <input type="text" [(ngModel)]="selectedDonor.donorName" name="donorName" required />
@@ -199,9 +193,20 @@
             <button type="button" class="edit-btn" (click)="closeEditOverlay()">Cancel</button>
           </div>
 
+             <!-- Update fail message -->
+            <div *ngIf="updateFailMessage" class="error-text" style="margin-top: 15px;margin-bottom: -20px;">Cannot update donor</div>
+            <!-- Update fail message -->
+
         </form>
       </div>
     </div>
+    <!-- Update success message -->
+    <div *ngIf="showUpdateSuccessMessage" class="success-overlay-message">
+          Donor updated successfully!  
+      </div>
+      <!-- Update success message -->
+
+    <!-- Update donor overlay end  -->
 
     <!-- delete donor overlay stuff -->
      <!-- delete donor overlay -->
@@ -240,5 +245,46 @@
 
   </ng-container>
   <!-- Edit view end -->
+
+    <!-- search overlay -->
+    <div *ngIf="searchOverlay" class="overlay">
+      <div class="overlay-content">
+          <h3>Search view</h3>
+          <form (ngSubmit)="findDonor()">
+            <input type="number" [(ngModel)]="searchIdInput" name="searchId" placeholder="Enter id to search" required>
+            
+            <!-- if search done -->
+              <div *ngIf="searchView">
+
+            <table style="width:100%; margin-bottom: 20px;">
+                   <tr><td><strong>ID:</strong></td><td>{{ searchDonor.donorId }}</td></tr>
+                   <tr><td><strong>Name:</strong></td><td>{{ searchDonor.donorName }}</td></tr>
+                   <tr><td><strong>Blood Group:</strong></td><td>{{ searchDonor.donorGroup }}</td></tr>
+                   <tr><td><strong>Phone:</strong></td><td>{{ searchDonor.donorPh }}</td></tr>
+                   <tr><td><strong>Email:</strong></td><td>{{ searchDonor.donorMail }}</td></tr>
+                   <tr><td><strong>Address:</strong></td><td>{{ searchDonor.donorAddress }}</td></tr>
+             </table>
+
+            </div>
+            <!--  -->
+            <!-- search error -->
+            <div *ngIf="searchError" class="error-text">No record found</div>
+            <!-- search error  ednd-->
+
+            <div class="button-group">
+            <button type="submit" class="insert-btn">Search</button>
+            <button class="edit-btn" (click)="closeSearchOverlay()">Back</button>
+            </div>
+          </form>
+
+             
+
+          
+
+          
+      </div>
+    </div>
+    <!-- search overlay -->
+
 
 </div>

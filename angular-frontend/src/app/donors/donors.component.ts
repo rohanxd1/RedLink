@@ -39,7 +39,7 @@ export class DonorsComponent implements OnInit
  
   
   
-
+  // buttons changing view for donors
   editDonor(): void {
     this.currentView = 'edit';  
   }
@@ -48,15 +48,11 @@ export class DonorsComponent implements OnInit
     this.currentView = 'list';  
     this.loadDonors();          
   }
+  // buttons changing view for donors *end
 
 
-// for create donor stuff
-
-  createError: string | null = null;
-  createErrorOverlay=false;
-  showSuccessMessage = false;
+  // this if for entire edit sthalam update,delete
   showOverlay = false;
-
   openOverlay(): void {
     this.showOverlay = true;
   }
@@ -64,7 +60,13 @@ export class DonorsComponent implements OnInit
   closeOverlay(): void {
     this.showOverlay = false;
   }
+  // this if for entire edit sthalam update,delete *end
 
+  // for create donor stuff
+
+  createError: string | null = null;
+  createErrorOverlay=false;
+  showSuccessMessage = false;
   newDonor: DonorDto = 
   {
     
@@ -117,29 +119,7 @@ export class DonorsComponent implements OnInit
 
 // createdonor stuff over
 
-// for editings things..confused so put it here
-  selectedDonor: DonorDto | null = null;
-  showEditOverlay: boolean = false;
 
-
-   openEditOverlay(donor: DonorDto): void {
-    this.selectedDonor = { ...donor }; // shallow copy to avoid direct mutation
-    this.showEditOverlay = true;
-  }
-
-  closeEditOverlay(): void {
-    this.showEditOverlay = false;
-    this.selectedDonor = null;
-  }
-
-  saveDonor(): void 
-  {
-    // Example: call your donorService.updateDonor(this.selectedDonor)
-    this.closeEditOverlay();
-    this.loadDonors();
-  }
-
-  // --------------------------------------------------/
 
   // delete donor stuff
   deleteOverlay =false;
@@ -218,6 +198,151 @@ export class DonorsComponent implements OnInit
 
   // delete donor stuff over
 
+    // Update DOnor stuff
+
+         selectedDonor: DonorDto =
+          {
+             donorId: 0,
+             donorName: '',
+             donorGroup: '',
+             donorPh: '',
+             donorMail: '',
+             donorAddress: ''
+          };
+         showUpdateOverlay: boolean = false;
+
+          updateId = 0;
+          openEditOverlay(donor: DonorDto): void 
+          {
+            this.selectedDonor = { ...donor }; // shallow copy to avoid direct mutation i.e. if change made to
+                                                  // selected due to ng change happenb to donor too
+            this.showUpdateOverlay = true;
+
+            if(this.selectedDonor.donorId!==undefined)
+            {
+              this.updateId=this.selectedDonor.donorId;
+            }
+            else
+            {
+              console.error("Donor id is null");
+            }
+          }
+
+          closeEditOverlay(): void  
+          {
+             this.showUpdateOverlay = false;
+             this.selectedDonor = 
+             {
+               donorId: 0,
+               donorName: '',
+               donorGroup: '',
+               donorPh: '',
+               donorMail: '',
+               donorAddress: ''
+             };
+          }
+          showUpdateSuccessMessage=false;
+          updateFailMessage=false;
+          updateDonor(): void 
+          {
+              this.donorService.updateDonor(this.updateId,this.selectedDonor).subscribe
+              (
+                {
+                  next:()=>
+                    {
+                      this.updateId=0;
+                      this.showUpdateOverlay=false;
+                      this.backToList();
+                      this.editDonor();
+                      this.selectedDonor = 
+                       {
+                         donorId: 0,
+                         donorName: '',
+                         donorGroup: '',
+                         donorPh: '',
+                         donorMail: '',
+                         donorAddress: ''
+                       };
+                       this.showUpdateSuccessMessage=true;
+                       setTimeout(()=>this.showUpdateSuccessMessage=false,3000);
+
+                    },
+                  error:()=>
+                    {
+                      this.updateFailMessage=true;
+                    }
+                }
+              );
+          }
+
+    // Update DOnor stuff end
+    
+    // Search Donor studd
+          searchView=false;
+          searchOverlay=false;
+          searchError=false;
+          searchIdInput: number | null = null;  // Add this line at the top
+
+          searchDonor: DonorDto=
+          {
+                         donorId: -1,
+                         donorName: '',
+                         donorGroup: '',
+                         donorPh: '',
+                         donorMail: '',
+                         donorAddress: ''
+          };
+          searchButton(): void
+          { 
+            this.searchOverlay=true;
+          }
+
+          
+
+          findDonor() 
+          {
+            if (this.searchIdInput != null && this.searchIdInput > 0) 
+              {
+               this.donorService.findDonor(this.searchIdInput).subscribe
+               (
+                {
+                  next: (data) => 
+                    {
+                      this.searchView = true;
+                      this.searchDonor = data;
+                    },
+                  error: (data) => 
+                    {
+                      this.searchError = true;
+                      console.error(data);
+                    }
+                }
+               );
+              } 
+              else 
+              {
+                 console.error("Donor id is invalid");
+              }
+          }
+
+          closeSearchOverlay():void
+          {
+            this.searchOverlay=false;
+            this.searchView=false;
+            this.searchIdInput = null;
+            this.searchDonor=
+          {
+                         donorId: 0,
+                         donorName: '',
+                         donorGroup: '',
+                         donorPh: '',
+                         donorMail: '',
+                         donorAddress: ''
+          };
+            this.backToList();
+
+          }
+    // Search Donor studd
   
 
 }

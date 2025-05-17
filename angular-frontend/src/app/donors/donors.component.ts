@@ -300,7 +300,17 @@ export class DonorsComponent implements OnInit
           
 
           findDonor() 
-          {
+          { this.searchError = false;
+            this.searchDonor=
+            {
+                         donorId: 0,
+                         donorName: '',
+                         donorGroup: '',
+                         donorPh: '',
+                         donorMail: '',
+                         donorAddress: ''
+            };
+            this.searchView = false;
             if (this.searchIdInput != null && this.searchIdInput > 0) 
               {
                this.donorService.findDonor(this.searchIdInput).subscribe

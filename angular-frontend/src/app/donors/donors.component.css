@@ -7,7 +7,13 @@
   min-height: 80vh;
   font-family: Arial, sans-serif;
 }
-
+.header-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 80px; /* fixed height to prevent shifts */
+}
 /* Buttons styles nd stff */
 
 .buttons-container 

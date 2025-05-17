@@ -80,7 +80,6 @@ public class DonorController
         {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Donor with id:"+id+" not found!! \nFailed to delete donor.");
         }
-//        return  ResponseEntity.status(HttpStatus.OK).body("Donor with id:"+id+" deleted.");
         String message="Donor with id:"+id+" deleted.";
         return ResponseEntity.ok(message);
     }

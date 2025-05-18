@@ -9,6 +9,7 @@ import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { HomeComponent } from './home/home.component';
 
 import { FormsModule } from '@angular/forms';
+import { HospitalComponent } from './hospital/hospital.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { FormsModule } from '@angular/forms';
     DonorsComponent,
     AdminHomeComponent,
     HomeComponent,
+    HospitalComponent,
 
   ],
   imports: [

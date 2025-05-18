@@ -25,20 +25,20 @@
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Blood Group</th>
+            <th >Blood Group</th>
             <th>Phone</th>
             <th>Email</th>
-            <th>Address</th>
+            <th style="text-align: justify;">Address</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let donor of donors">
             <td>{{ donor.donorId }}</td>
             <td>{{ donor.donorName }}</td>
-            <td>{{ donor.donorGroup }}</td>
+            <td >{{ donor.donorGroup }}</td>
             <td>{{ donor.donorPh }}</td>
             <td>{{ donor.donorMail }}</td>
-            <td>{{ donor.donorAddress }}</td>
+            <td style="min-width: 100px;">{{ donor.donorAddress }}</td>
           </tr>
         </tbody>
       </table>

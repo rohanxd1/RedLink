@@ -51,7 +51,7 @@ export class DonorsComponent implements OnInit
   // buttons changing view for donors *end
 
 
-  // this if for entire edit sthalam update,delete
+  // this is for entire edit sthalam update,delete overlay
   showOverlay = false;
   openOverlay(): void {
     this.showOverlay = true;
@@ -60,7 +60,7 @@ export class DonorsComponent implements OnInit
   closeOverlay(): void {
     this.showOverlay = false;
   }
-  // this if for entire edit sthalam update,delete *end
+  // this if for entire edit sthalam update,delete overlay *end
 
   // for create donor stuff
 

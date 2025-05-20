@@ -8,7 +8,6 @@
   min-height: 80vh;
   font-family: Arial, sans-serif;
 }
-/* ===== End of Container Section ===== */
 
 /* ============================
    Header Bar Section
@@ -20,7 +19,6 @@
   position: relative;
   height: 80px;
 }
-/* ===== End of Header Bar Section ===== */
 
 /* ============================
    Button Styles
@@ -30,10 +28,10 @@
   gap: 15px;
   margin-bottom: 20px;
   margin-top: -30px;
+  justify-content: center;
 }
 
-.primary-btn
- {
+.primary-btn {
   background-color: #d32f2f;
   color: white;
   padding: 10px 18px;
@@ -44,37 +42,13 @@
   transition: background-color 0.3s ease;
 }
 
-.overlay-content .button-group {
-  display: flex;
-  /*  */
-  
-  justify-content: space-between;
-  gap: 15px;
-  margin-top: -20px;
-  margin-bottom: -52px;
-
-}
-.overlay-content button {
-  padding: 10px;
-  font-weight: bold;
-  font-size: 16px;
-  border-radius: 6px;
-  width: 200px;
-  height: 40px;
-  cursor: pointer;
-  /*  */
-}
-
-.secondary-btn
-{
-  
+.secondary-btn {
   padding: 10px 18px;
   border: none;
   border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  /*  */
   background-color: #eee;
   color: #333;
 }
@@ -84,12 +58,9 @@
   background-color: #b71c1c;
 }
 
-
-
 .overlay-content .primary-btn {
   background-color: #d32f2f;
   color: white;
-  border: none;
   font-weight: 600;
 }
 
@@ -102,26 +73,27 @@
   color: #333;
   border: 1px solid #ccc;
   font-weight: 600;
-  
 }
 
 .overlay-content .secondary-btn:hover {
   background-color: #ddd;
 }
 
-/* ===== End of Button Styles ===== */
-
 /* ============================
    Table Styles
 ============================ */
+.table-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 .data-table {
-  width: 100%;
+  margin: 0 auto;
   border-collapse: collapse;
   box-shadow: 0 4px 10px rgba(211, 47, 47, 0.2);
   background: white;
   border-radius: 8px;
-  word-wrap: break-word;
-  word-break: break-word;
   overflow: hidden;
 }
 
@@ -136,35 +108,16 @@
   padding: 14px 18px;
   text-align: left;
   border-bottom: 1px solid #f2cccc;
+  max-width: 150px;
 }
 
-.data-table th.actions-header,
-.data-table td.actions-cell {
+.data-table td:nth-child(1),
+.data-table td:nth-child(2) {
   text-align: center;
-}
-.data-table td:nth-child(2)
-{ 
   word-wrap: break-word;
   word-break: break-word;
-  max-width: 50px;
-}
-.data-table td:nth-child(3)
-{ 
-  
   max-width: 100px;
 }
-.data-table td:nth-child(4)
-{ 
-  word-wrap: break-word;
-  word-break: break-word;
-  max-width: 110px;
-}
-.data-table td:nth-child(6)
-{
-  max-width: 250px;
-}
-
-/* ===== End of Table Styles ===== */
 
 /* ============================
    No Data Message
@@ -176,7 +129,6 @@
   font-size: 20px;
   font-weight: 600;
 }
-/* ===== End of No Data Message ===== */
 
 /* ============================
    Error Box
@@ -204,7 +156,6 @@
   color: red;
   font-weight: 600;
 }
-/* ===== End of Error Box ===== */
 
 /* ============================
    Overlay Styles
@@ -224,103 +175,76 @@
 
 .overlay-content {
   background: #ffffff;
-  padding: 40px 50px;
+  padding: 10px;
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   width: 100%;
-  max-width: 500px;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  
 }
 
 .overlay-content h3 {
-
   font-weight: 700;
   font-size: 26px;
-
-  margin-top: 0;
-  color: #ff0000;
-  /* font-size: 24px; */
-  margin-top: -5px;
-  padding-bottom: 10px;
-  /* font-weight: 600; */
+  color: #d32f2f;
+  margin-bottom: -10px;
   text-align: center;
   width: 100%;
-
 }
 
-.overlay-content form {
-  display: flex;
-  flex-direction: column;
-  margin-top: -20px;
-  gap: 2px;
-}
-
-/* ==== CHANGES START ==== */
-.overlay-content label {
-  font-weight: 600;
-  font-size: 14px;
-  color: #444;
-  display: flex;
-  flex-direction: column;
-  margin-top: 12px;
-  margin-bottom: -20px;
-}
-/* ==== CHANGES END ==== */
-
-.overlay-content input,
-.overlay-content select {
-  margin-top: 6px;
-  padding: 10px 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
-}
-
-.overlay-content .button-group-container {
-  display: flex;
-  justify-content: space-between;
-  gap: 45px;
-  justify-content: center;
-  margin-top: .2mm;
-  /* width: 700px; */
-  
-}
-
-.overlay-content .error-text
-{
-    display: flex;
-    justify-content: center;
-    font-weight: bold;
-    margin-top: -10px;;
-}
-
-.overlay-content table {
+/* Inventory Table inside Overlay */
+.inventory-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 30px;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(211, 47, 47, 0.2);
 }
 
-.overlay-content table td {
-  padding: 10px 12px;
+.inventory-table tr {
   border-bottom: 1px solid #f2cccc;
-  font-weight: 600;
-  color: #444;
 }
 
-.overlay-content table td:first-child {
-  width: 40%;
-  color: #d32f2f;
+.inventory-table .label-cell {
+  width: 35%;
   text-align: right;
   padding-right: 20px;
+  color: #d32f2f;
+  font-weight: bold;
+  vertical-align: middle;
+  padding: 16px 12px;
 }
 
+.inventory-table .control-cell {
+  width: 65%;
+  padding: 12px;
+  text-align: left;
+}
 
+.unit-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
+.unit-controls input {
+  width: 60px;
+  padding: 8px;
+  text-align: center;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
 
-/* ===== End of Overlay Styles ===== */
+/* Make the overlay buttons consistent */
+.overlay-buttons {
+  justify-content: center;
+  gap: 30px;
+  margin-top: 10px;
+}
 
 /* ============================
    Success Message
@@ -342,4 +266,3 @@
   70% { opacity: 1; }
   100% { opacity: 0; }
 }
-/* ===== End of Success Message ===== */

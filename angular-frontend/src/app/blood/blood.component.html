@@ -1,0 +1,68 @@
+<div class="section-container">
+
+  <!-- ====== List View Section ====== -->
+  <div *ngIf="currentView === 'list'">
+
+    <div class="button-group-container">
+      <button class="primary-btn" (click)="updateOverlay()">Update</button>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-box" (click)="clearError()">
+      <div class="close-hint">click to close</div>
+      <div class="error-text">{{errorMessage}}</div>
+    </div>
+
+    <div *ngIf="blood.length > 0; else noBlood">
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Blood Group</th>
+              <th>Available units</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let bloods of blood">
+              <td>{{bloods.bloodGroup}}</td>
+              <td>{{bloods.availableUnits}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <ng-template #noBlood>
+      <div class="no-data">No blood inventory found.</div>
+    </ng-template>
+  </div>
+  <!-- ====== End of List View Section ====== -->
+
+  <!-- ====== Update Inventory Overlay Section ====== -->
+<div *ngIf="isUpdateOverlayVisible" class="overlay">
+  <div class="overlay-content">
+    <h3>Update Inventory</h3>
+
+    <table class="inventory-table">
+      <tr *ngFor="let viewblood of blood">
+        <td class="label-cell">{{ viewblood.bloodGroup }}</td>
+        <td class="control-cell">
+          <div class="unit-controls">
+            <button (click)="decreaseUnits(viewblood.bloodGroup)" class="secondary-btn">-</button>
+            <input type="number" min="0" [(ngModel)]="editableBlood[viewblood.bloodGroup]" (ngModelChange)="sanitizeInput(viewblood.bloodGroup)" />
+            <button (click)="increaseUnits(viewblood.bloodGroup)" class="secondary-btn">+</button>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <div *ngIf="showError" class="error-text" style="display: flex; justify-content: center; ">Cannot update record(s)</div>
+    <div class="button-group-container overlay-buttons">
+      <button class="primary-btn" (click)="confirmUpdate()">Confirm</button>
+      <button class="secondary-btn" (click)="cancelUpdate()">Cancel</button>
+    </div>
+    
+  </div>
+</div>
+<!-- ====== End of Update Inventory Overlay Section ====== -->
+
+
+</div>

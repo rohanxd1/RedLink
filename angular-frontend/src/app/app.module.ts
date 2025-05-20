@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 
 import { FormsModule } from '@angular/forms';
 import { HospitalComponent } from './hospital/hospital.component';
+import { BloodComponent } from './blood/blood.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { HospitalComponent } from './hospital/hospital.component';
     AdminHomeComponent,
     HomeComponent,
     HospitalComponent,
+    BloodComponent,
 
   ],
   imports: [

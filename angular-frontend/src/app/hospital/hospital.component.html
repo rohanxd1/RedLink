@@ -136,8 +136,12 @@
               <td>{{hospital.hospitalPh}}</td>
               <td>{{hospital.hospitalMail}}</td>
               <td>{{hospital.hospitalAddress}}</td>
-              <td><button class="primary-btn" (click)="openUpdateOverlay(hospital)">Edit</button></td>
-             <td><button class="primary-btn" (click)="openDeleteOverlay(hospital)">Delete</button></td>
+
+              
+
+                <td><button class="primary-btn" (click)="openUpdateOverlay(hospital)">Edit</button></td>
+                <td><button class="primary-btn" (click)="openDeleteOverlay(hospital)">Delete</button></td>
+              
            </tr>
           </tbody>
         </table>
@@ -153,7 +157,7 @@
           <div class="overlay-content">
 
             <div style="margin-bottom: -30px; margin-top: -10px;">
-              <h3>Edit HospitalDetails</h3>
+              <h3>Edit Hospital Details</h3>
             </div>
 
             <!-- actual form for update -->
@@ -204,7 +208,14 @@
              Hospital updated successfully!  
         </div>
       <!-- Update success message -->
-        <div *ngIf="deleteOverlay && deletedHospital" class="overlay" >
+        
+
+        
+         <!-- update hosp overlay end-->
+
+      <!-- delete hospital overlay -->
+
+      <div *ngIf="deleteOverlay && deletedHospital" class="overlay" >
         
             <div class="overlay-content" style="padding-bottom: 120px;">
                 <h3 class="">Confirm Delete Hospital</h3>
@@ -218,7 +229,7 @@
                     <tr><td><strong>Address:</strong></td><td>{{deletedHospital.hospitalAddress}}</td></tr>
                   </table>
 
-                <div class="button-group" style=" margin-bottom: -80px; gap: -40px;">
+                <div class="button-group-container" style=" margin-bottom: -80px; gap: -40px;">
                   
                   <button class="primary-btn" (click)="deleteHospital()">Delete</button>
                   <button class="secondary-btn" (click)="closeDeleteOverlay()">Cancel</button>
@@ -231,12 +242,6 @@
         <div *ngIf="showDeleteSuccessMessage" class="success-overlay-message">
              Hospital deleted successfully!  
         </div>
-
-        
-         <!-- update hosp overlay end-->
-
-      <!-- delete hospital overlay -->
-
 
       <!-- delete hospital overlay end-->
 

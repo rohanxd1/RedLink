@@ -4,6 +4,7 @@ import { DonorsComponent } from './donors/donors.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { HomeComponent } from './home/home.component';
 import { HospitalComponent } from './hospital/hospital.component';
+import { BloodComponent } from './blood/blood.component';
 
 
 const routes: Routes = [
@@ -11,8 +12,8 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'adminhome', component: AdminHomeComponent },
   {path:'donor',component:DonorsComponent},
-  {path:'hospital',component:HospitalComponent}
-  // { path: 'inventory', component: InventoryComponent },
+  {path:'hospital',component:HospitalComponent},
+  { path: 'inventory', component: BloodComponent }
   // { path: 'logs', component: LogsComponent }
   
 

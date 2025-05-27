@@ -22,5 +22,5 @@ public class Admin {
     @Column(nullable = false)
     private String adminPassword;
 
-//    hello
+
 }

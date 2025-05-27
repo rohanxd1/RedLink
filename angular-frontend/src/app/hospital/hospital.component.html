@@ -1,0 +1,290 @@
+<div class="section-container">
+
+    <!-- view hospitals -->
+
+  <ng-container *ngIf="currentView === 'list'">
+    <div class="button-group-container">
+      <button class="primary-btn" (click)="openOverlay()">Insert New Hospital</button>
+      <button class="primary-btn" (click)="editHospital()">Edit</button>
+      <button class="primary-btn" (click)="searchButton()">Search</button>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-box" (click)="clearError()">
+      <div class="close-hint">click to close</div>
+      <div class="error-text">{{errorMessage}}</div>
+    </div>
+
+    <div *ngIf="hospitals.length > 0; else noHospitals">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Hospital ID</th>
+            <th>Hospital Name</th>
+            <th>Hospital Coordinator</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let hospital of hospitals">
+            <td>{{hospital.hospitalId}}</td>
+            <td>{{hospital.hospitalName}}</td>
+            <td>{{hospital.hospitalCoordinator}}</td>
+            <td>{{hospital.hospitalPh}}</td>
+            <td>{{hospital.hospitalMail}}</td>
+            <td>{{hospital.hospitalAddress}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #noHospitals>
+      <div class="no-data">No Hospitals found.</div>
+    </ng-template>
+  </ng-container>
+   <!-- view hospitals  end-->
+
+    
+  <!-- Overlay for create hospital -->
+<div *ngIf="showCreateOverlay" class="overlay">
+  <div class="overlay-content">
+    <h3 style="margin-bottom: -5px;">Create Hospital Entry</h3>
+
+    <form (ngSubmit)="createHospital()" style="gap: 25px;">
+
+      <!-- ==== CHANGES START ==== -->
+      <label>
+        Hospital Name:
+        <input type="text" [(ngModel)]="newHospital.hospitalName" name="hospitalName" required />
+      </label>
+
+      <label>
+        Hospital Coordinator:
+        <input type="text" [(ngModel)]="newHospital.hospitalCoordinator" name="hospitalCoordinator" required />
+      </label>
+
+      <label>
+        Hospital Password:
+        <input type="text" [(ngModel)]="newHospital.hospitalPassword" name="hospitalPassword" required />
+      </label>
+
+      <label>
+        Phone:
+        <input type="text" [(ngModel)]="newHospital.hospitalPh" name="hospitalPh" required />
+      </label>
+
+      <label>
+        Email:
+        <input type="email" [(ngModel)]="newHospital.hospitalMail" name="hospitalMail" required />
+      </label>
+
+      <label>
+        Address:
+        <input type="text" [(ngModel)]="newHospital.hospitalAddress" name="hospitalAddress" required />
+      </label>
+      <!-- ==== CHANGES END ==== -->
+
+      <div class="button-group-container" style="margin-top: 20px;margin-bottom: -10px;">
+        <button type="submit" class="primary-btn">Add Hospital</button>
+        <button type="button" class="secondary-btn" (click)="closeCreateOverlay()">Cancel</button>
+      </div>
+    </form>
+
+    <div *ngIf="createErrorOverlay" class="error-text" style="color: red; font-family: Arial, sans-serif; font-weight: 600; margin-bottom: -25px;">
+      {{ createError }}
+    </div>
+  </div>
+</div>
+
+    <!-- create success message -->
+      <div *ngIf="showCreateSuccessMessage" class="success-overlay-message">
+          Hospital created successfully!
+      </div>
+    <!-- create success message end -->
+
+    <!-- overlay for create hospital enbd -->
+
+
+    <!-- overlay for edit hospital -->
+      <ng-container *ngIf="currentView === 'edit'">
+
+        <div style="margin-bottom: 20px;margin-top: -30px;">
+        <button  class="primary-btn" (click)="backToList()">Go back</button>
+        </div>
+        <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+        <!-- edit mode hospital table list -->
+        <div *ngIf="hospitals.length > 0; else noHospitals">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Hospital ID</th>
+              <th>Hospital Name</th>
+              <th>Hospital Coordinator</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Address</th>
+              <th colspan="2" style="text-align: center;">Actions</th>
+            
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let hospital of hospitals">
+              <td>{{hospital.hospitalId}}</td>
+              <td>{{hospital.hospitalName}}</td>
+              <td>{{hospital.hospitalCoordinator}}</td>
+              <td>{{hospital.hospitalPh}}</td>
+              <td>{{hospital.hospitalMail}}</td>
+              <td>{{hospital.hospitalAddress}}</td>
+
+              
+
+                <td><button class="primary-btn" (click)="openUpdateOverlay(hospital)">Edit</button></td>
+                <td><button class="primary-btn" (click)="openDeleteOverlay(hospital)">Delete</button></td>
+              
+           </tr>
+          </tbody>
+        </table>
+        </div>
+
+        <ng-template #noHospitals>
+          <div class="no-data">No Hospitals found.</div>
+         </ng-template>
+
+         <!-- update hosp overlay -->
+         <div *ngIf="updateOverlay && selectedHospital" class="overlay">
+
+          <div class="overlay-content">
+
+            <div style="margin-bottom: -30px; margin-top: -10px;">
+              <h3>Edit Hospital Details</h3>
+            </div>
+
+            <!-- actual form for update -->
+              <form (ngSubmit)="updateHospital()">
+               <label>
+                  Hospital Name:
+                 <input type="text" [(ngModel)]="selectedHospital.hospitalName" name="hospitalName" required />
+               </label>
+               <br />
+               <label>
+                  Hospital Coordinator:
+                  <input type="text" [(ngModel)]="selectedHospital.hospitalCoordinator" name="hospitalCoordinator" required>
+                 </label>
+                <br />
+                <label>
+                   Phone:
+                  <input type="text" [(ngModel)]="selectedHospital.hospitalPh" name="hospitalPh" required />
+                </label>
+                <br />
+                <label>
+                   Email:
+                  <input type="email" [(ngModel)]="selectedHospital.hospitalMail" name="hospitalMail" required />
+                </label>
+                <br />
+                <label>
+                   Address:
+                  <input type="text" [(ngModel)]="selectedHospital.hospitalAddress" name="ospitalAddress" required />
+                </label>
+               <br /><br />
+               <div class="button-group-container">
+                  <button type="submit" class="primary-btn">Save</button>
+                  <button type="button" class="secondary-btn" (click)="closeUpdateOverlay()">Cancel</button>
+                </div>
+
+             <!-- Update fail message -->
+                <div *ngIf="updateFailMessage" class="error-text" style="margin-top: 10px;margin-bottom: -15px;">Cannot update hospital</div>
+            <!-- Update fail message -->
+
+              </form>
+            <!-- actual form for update emnd-->
+            
+          </div>
+
+         </div>
+
+          <!-- Update success message -->
+        <div *ngIf="showUpdateSuccessMessage" class="success-overlay-message">
+             Hospital updated successfully!  
+        </div>
+      <!-- Update success message -->
+        
+
+        
+         <!-- update hosp overlay end-->
+
+      <!-- delete hospital overlay -->
+
+      <div *ngIf="deleteOverlay && deletedHospital" class="overlay" >
+        
+            <div class="overlay-content" style="padding-bottom: 120px;">
+                <h3 class="">Confirm Delete Hospital</h3>
+
+                  <table style="width:100%; margin-bottom: 20px;margin-top: -40px;">
+                    <tr><td><strong>hospitalId:</strong></td><td>{{deletedHospital.hospitalId}}</td></tr>
+                    <tr><td><strong>hospitalName:</strong></td><td>{{deletedHospital.hospitalName}}</td></tr>
+                    <tr><td><strong>hospitalCoordinator:</strong></td><td>{{deletedHospital.hospitalCoordinator}}</td></tr>
+                    <tr><td><strong>Phone:</strong></td><td>{{deletedHospital.hospitalPh}}</td></tr>
+                    <tr><td><strong>Email:</strong></td><td>{{deletedHospital.hospitalMail}}</td></tr>
+                    <tr><td><strong>Address:</strong></td><td>{{deletedHospital.hospitalAddress}}</td></tr>
+                  </table>
+
+                <div class="button-group-container" style=" margin-bottom: -80px; gap: -40px;">
+                  
+                  <button class="primary-btn" (click)="deleteHospital()">Delete</button>
+                  <button class="secondary-btn" (click)="closeDeleteOverlay()">Cancel</button>
+                </div>
+                <div *ngIf="deleteFailMessage" class="error-text" style="margin-top: 90px; margin-bottom: -90px;" >Failed to delete Hospital</div>
+    
+              </div>
+        </div>
+          
+        <div *ngIf="showDeleteSuccessMessage" class="success-overlay-message">
+             Hospital deleted successfully!  
+        </div>
+
+      <!-- delete hospital overlay end-->
+
+
+      </ng-container>
+    <!-- overlay for edit  hospital end-->
+
+        <!-- search overlay -->
+    <div *ngIf="searchOverlay" class="overlay">
+      <div class="overlay-content">
+          <h3>Search view</h3>
+          <form (ngSubmit)="findHospital()">
+            <input type="number" [(ngModel)]="searchIdInput" name="searchId" placeholder="Enter id to search" required min="1">
+            
+            <!-- if search done -->
+              <div *ngIf="searchView">
+
+            <table style="width:100%; margin-bottom: 20px;">
+                   <tr><td><strong>Id:</strong></td><td>{{searchHospital.hospitalId }}</td></tr>
+                   <tr><td><strong>Hospital Name:</strong></td><td>{{searchHospital.hospitalName }}</td></tr>
+                   <tr><td><strong>Coordinator:</strong></td><td>{{searchHospital.hospitalCoordinator }}</td></tr>
+                   <tr><td><strong>Phone:</strong></td><td>{{searchHospital.hospitalPh }}</td></tr>
+                   <tr><td><strong>Email:</strong></td><td>{{searchHospital.hospitalMail }}</td></tr>
+                   <tr><td><strong>Address:</strong></td><td>{{searchHospital.hospitalAddress }}</td></tr>
+             </table>
+
+            </div>
+            <!--  -->
+            <!-- search error -->
+            <div *ngIf="searchError" class="error-text" style="margin-top: 10px;">No record found</div>
+            <!-- search error  ednd-->
+            
+            <div class="button-group-container" style="margin-top: 40px;">
+              <div class="button-group">
+                <button type="submit" class="primary-btn">Search</button>
+                 <button class="secondary-btn" (click)="closeSearchOverlay()">Back</button>
+              </div>
+            </div>
+            
+          </form>
+          
+      </div>
+    </div>
+    <!-- search overlay -->
+    
+</div>

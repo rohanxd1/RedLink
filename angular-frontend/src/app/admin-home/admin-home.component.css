@@ -1,0 +1,69 @@
+/* Outer container for header and navbar */
+.header-container {
+  width: 100%;
+  background-color: #d32f2f;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Flex layout for logo and header */
+.header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 16px 0;
+}
+
+/* Logo aligned to the left */
+.logo {
+  position: absolute;
+  left: 60px;
+  /* bottom: 20px; */
+  top: 32px;;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+/* Admin Home text centered */
+.header {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Navbar styles */
+.navbar ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 12px 0;
+  margin: 0;
+}
+
+.navbar ul li a {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.navbar ul li a:hover {
+  background-color: #b71c1c;
+  border-radius: 4px;
+}
+
+.navbar ul li a.active {
+  background-color: white;
+  color: #d32f2f;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.content-area {
+  margin-top: 20px;
+}

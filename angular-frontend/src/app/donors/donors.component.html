@@ -1,0 +1,285 @@
+<div class="donors-container">
+
+  <!-- Donor List View -->
+  <ng-container *ngIf="currentView === 'list'">
+
+
+    <div class="buttons-container">
+      <button class="insert-btn" (click)="openOverlay()">Insert New Donor</button>
+      <button class="edit-btn" (click)="editDonor()">Edit</button>
+      <button class="insert-btn" (click)="searchButton()">Search</button>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error" (click)="clearError()">
+      <div class="close-hint">click to close</div>
+      <div class="error-text">{{ errorMessage }}</div>
+    </div>
+
+    <!-- erooo over -->
+
+    <!-- Donor Table -->
+    <div *ngIf="donors.length > 0; else noDonors">
+      <table class="donor-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th >Blood Group</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th style="text-align: justify;">Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let donor of donors">
+            <td>{{ donor.donorId }}</td>
+            <td>{{ donor.donorName }}</td>
+            <td >{{ donor.donorGroup }}</td>
+            <td>{{ donor.donorPh }}</td>
+            <td>{{ donor.donorMail }}</td>
+            <td style="min-width: 100px;">{{ donor.donorAddress }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- else part -->
+    <ng-template #noDonors>
+      <div class="no-data">No donors found.</div>
+    </ng-template>
+    <!-- if ends here -->
+
+
+      <!-- Overlay for Insert -->
+    <!-- Overlay for Insert -->
+<div *ngIf="showOverlay" class="overlay">
+  <div class="overlay-content">
+    <div style="margin-bottom: -30px; margin-top: -10px;">
+      <h3>Create Donor Entry</h3>
+    </div>
+    <form (ngSubmit)="createDonor()">
+      <label>
+        Name:
+        <input type="text" [(ngModel)]="newDonor.donorName" name="donorName" required />
+      </label>
+      <label>
+        Blood Group:
+        <select [(ngModel)]="newDonor.donorGroup" name="donorGroup" required>
+              <option value="" disabled selected>Select blood group</option>
+              <option *ngFor="let group of bloodGroups" [value]="group">{{ group }}</option>
+        </select>
+      </label>
+      <label>
+        Phone:
+        <input type="text" [(ngModel)]="newDonor.donorPh" name="donorPh" required />
+      </label>
+      <label>
+        Email:
+        <input type="email" [(ngModel)]="newDonor.donorMail" name="donorMail" required />
+      </label>
+      <label>
+        Address:
+        <input type="text" [(ngModel)]="newDonor.donorAddress" name="donorAddress" required />
+      </label>
+
+      <div class="button-group" style="margin-top: 20px;">
+        <button type="submit" class="insert-btn">Add Donor</button>
+        <button type="button" class="edit-btn" (click)="closeOverlay()">Cancel</button>
+      </div>
+    </form>
+
+    
+    <!-- create faile message -->
+    <div *ngIf="createErrorOverlay" class="error-text" style="color: red ;font-family: Arial, sans-serif; font-weight: 600; margin-bottom: -25px;">
+      {{createError}}
+    </div>
+    <!-- create success message end -->
+  
+  </div>
+</div>
+<!-- create success message -->
+      <div *ngIf="showSuccessMessage" class="success-overlay-message">
+          Donor created successfully!
+      </div>
+  <!-- create success message end -->
+  
+  <!-- Overlay for Insert -->
+
+  </ng-container>
+  
+
+  <!-- Edit View -->
+  <ng-container *ngIf="currentView === 'edit'">
+
+    <!-- allignment sheri aakan...make css class later -->
+    <div style="margin-bottom: 20px;margin-top: -30px;">
+        <button  class="edit-btn" (click)="backToList()">Go back</button>
+    </div>
+
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+    <div *ngIf="donors.length > 0; else noDonors">
+      <table class="donor-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Blood Group</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th colspan="2" style="text-align: center;">Actions</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let donor of donors">
+            <td>{{ donor.donorId }}</td>
+            <td>{{ donor.donorName }}</td>
+            <td>{{ donor.donorGroup }}</td>
+            <td>{{ donor.donorPh }}</td>
+            <td>{{ donor.donorMail }}</td>
+            <td>{{ donor.donorAddress }}</td>
+            <td><button class="edit-btn" (click)="openEditOverlay(donor)">Edit</button></td>
+            <td><button class="delete-btn" (click)="openDeleteOverlay(donor)">Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #noDonors>
+      <div class="no-data">No donors found.</div>
+    </ng-template>
+
+    <!-- Update Donor Overlay -->
+    <div *ngIf="showUpdateOverlay && selectedDonor" class="overlay">
+      <div class="overlay-content">
+        
+        
+        <div style="margin-bottom: -30px; margin-top: -10px;">
+          <h3>Edit Donor Details</h3>
+        </div>
+        <form (ngSubmit)="updateDonor()">
+          <label>
+            Name:
+            <input type="text" [(ngModel)]="selectedDonor.donorName" name="donorName" required />
+          </label>
+          <br />
+          <label>
+            Blood Group:
+            <select [(ngModel)]="selectedDonor.donorGroup" name="editDonorGroup" required>
+              <option value="" disabled>Select blood group</option>
+              <option *ngFor="let group of bloodGroups" [value]="group">{{ group }}</option>
+            </select>
+          </label>
+          <br />
+          <label>
+            Phone:
+            <input type="text" [(ngModel)]="selectedDonor.donorPh" name="donorPh" required />
+          </label>
+          <br />
+          <label>
+            Email:
+            <input type="email" [(ngModel)]="selectedDonor.donorMail" name="donorMail" required />
+          </label>
+          <br />
+          <label>
+            Address:
+            <input type="text" [(ngModel)]="selectedDonor.donorAddress" name="donorAddress" required />
+          </label>
+          <br /><br />
+          <div class="button-group">
+            <button type="submit" class="insert-btn">Save</button>
+            <button type="button" class="edit-btn" (click)="closeEditOverlay()">Cancel</button>
+          </div>
+
+             <!-- Update fail message -->
+            <div *ngIf="updateFailMessage" class="error-text" style="margin-top: 15px;margin-bottom: -20px;">Cannot update donor</div>
+            <!-- Update fail message -->
+
+        </form>
+      </div>
+    </div>
+    <!-- Update success message -->
+    <div *ngIf="showUpdateSuccessMessage" class="success-overlay-message">
+          Donor updated successfully!  
+      </div>
+      <!-- Update success message -->
+
+    <!-- Update donor overlay end  -->
+
+    <!-- delete donor overlay stuff -->
+     <!-- delete donor overlay -->
+<div *ngIf="deleteOverlay && deletedDonor" class="overlay delete-overlay">
+  <div class="overlay-content">
+    <h3>Confirm Delete Donor</h3>
+
+    <table style="width:100%; margin-bottom: 20px;">
+      <tr><td><strong>ID:</strong></td><td>{{ deletedDonor.donorId }}</td></tr>
+      <tr><td><strong>Name:</strong></td><td>{{ deletedDonor.donorName }}</td></tr>
+      <tr><td><strong>Blood Group:</strong></td><td>{{ deletedDonor.donorGroup }}</td></tr>
+      <tr><td><strong>Phone:</strong></td><td>{{ deletedDonor.donorPh }}</td></tr>
+      <tr><td><strong>Email:</strong></td><td>{{ deletedDonor.donorMail }}</td></tr>
+      <tr><td><strong>Address:</strong></td><td>{{ deletedDonor.donorAddress }}</td></tr>
+    </table>
+
+    <div class="button-group">
+      <button class="insert-btn" (click)="deleteDonor()">Delete</button>
+      
+      <button class="edit-btn" (click)="closeDeleteOverlay()">Cancel</button>
+    </div>
+    <div *ngIf="deleteFailMessage" class="error-text" >Failed to delete donor</div>
+    
+  </div>
+</div>
+
+  <!-- delete success message -->
+   <div *ngIf="showDeleteSuccessMessage" class="success-overlay-message">
+          Donor Deleted successfully!
+          
+      </div>
+    <!-- delete success message end -->
+    
+  
+  <!-- delete donor overlay over -->
+
+  </ng-container>
+  <!-- Edit view end -->
+
+    <!-- search overlay -->
+    <div *ngIf="searchOverlay" class="overlay">
+      <div class="overlay-content">
+          <h3>Search view</h3>
+          <form (ngSubmit)="findDonor()">
+            <input type="number" [(ngModel)]="searchIdInput" name="searchId" placeholder="Enter id to search" required>
+            
+            <!-- if search done -->
+              <div *ngIf="searchView">
+
+            <table style="width:100%; margin-bottom: 20px;">
+                   <tr><td><strong>ID:</strong></td><td>{{ searchDonor.donorId }}</td></tr>
+                   <tr><td><strong>Name:</strong></td><td>{{ searchDonor.donorName }}</td></tr>
+                   <tr><td><strong>Blood Group:</strong></td><td>{{ searchDonor.donorGroup }}</td></tr>
+                   <tr><td><strong>Phone:</strong></td><td>{{ searchDonor.donorPh }}</td></tr>
+                   <tr><td><strong>Email:</strong></td><td>{{ searchDonor.donorMail }}</td></tr>
+                   <tr><td><strong>Address:</strong></td><td>{{ searchDonor.donorAddress }}</td></tr>
+             </table>
+
+            </div>
+            <!--  -->
+            <!-- search error -->
+            <div *ngIf="searchError" class="error-text">No record found</div>
+            <!-- search error  ednd-->
+
+            <div class="button-group">
+            <button type="submit" class="insert-btn">Search</button>
+            <button class="edit-btn" (click)="closeSearchOverlay()">Back</button>
+            </div>
+          </form>
+          
+      </div>
+    </div>
+    <!-- search overlay -->
+
+
+</div>

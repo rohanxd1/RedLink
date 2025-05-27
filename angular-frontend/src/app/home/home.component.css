@@ -1,0 +1,34 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #fff5f5;
+  color: #b71c1c;
+}
+
+h1 {
+  font-size: 32px;
+  margin-bottom: 40px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 20px;
+}
+
+button {
+  padding: 12px 24px;
+  font-size: 18px;
+  border: none;
+  background-color: #d32f2f;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #b71c1c;
+}

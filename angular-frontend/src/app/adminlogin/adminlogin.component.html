@@ -1,0 +1,57 @@
+<div class="header-container">
+
+  <div class="header-bar">
+    <div class="logo"> 
+      <span style="color: rgb(121, 1, 1);" >Red</span><span >Link</span> 
+    </div>
+    <div class="header">Admin Login</div>
+  </div>
+
+  
+</div>
+
+<div class="content-area">
+    
+      <div class="login-page-container">
+  <div class="login-box">
+    <h3>Admin Login</h3>
+
+    <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        [(ngModel)]="loginData.email"
+        required
+      />
+
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        [(ngModel)]="loginData.password"
+        required
+      />
+
+      <div *ngIf="errorMessage" class="error-text">
+        {{ errorMessage }}
+      </div>
+
+      <div class="button-group-container">
+        <button type="submit" class="primary-btn" [disabled]="loginForm.invalid">
+          Login
+        </button>
+        <button type="button" class="secondary-btn" (click)="onCancel()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+  
+
+  
+</div>

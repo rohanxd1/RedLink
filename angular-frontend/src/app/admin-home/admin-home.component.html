@@ -1,0 +1,40 @@
+<div class="header-container">
+
+  <div class="header-bar">
+    <div class="logo"> 
+      <span style="color: rgb(121, 1, 1);" >Red</span><span >Link</span> 
+    </div>
+    <div class="header">Admin Home</div>
+  </div>
+
+  <nav class="navbar">
+    <ul>
+      <li>
+        <a href="#" 
+           (click)="showView('inventory'); $event.preventDefault()" 
+           [class.active]="currentView === 'inventory'">Inventory</a>
+      </li>
+      <li>
+        <a href="#" 
+           (click)="showView('donors'); $event.preventDefault()" 
+           [class.active]="currentView === 'donors'">Donors</a>
+      </li>
+      <li>
+        <a href="#" 
+           (click)="showView('hospitals'); $event.preventDefault()" 
+           [class.active]="currentView === 'hospitals'">Hospitals</a>
+      </li>
+      <li>
+        <a href="#" 
+           (click)="showView('logs'); $event.preventDefault()" 
+           [class.active]="currentView === 'logs'">Logs</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<div class="content-area">
+  <app-donors *ngIf="currentView === 'donors'"></app-donors>
+  <app-hospital *ngIf="currentView=='hospitals'"></app-hospital>
+  <app-blood *ngIf="currentView=='inventory'"></app-blood>
+</div>

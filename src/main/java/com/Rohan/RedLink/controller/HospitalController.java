@@ -19,8 +19,10 @@ public class HospitalController
 {
     private final HospitalService hospitalService;
 
+
+
     @PostMapping("/create")
-    public ResponseEntity<?> createDonor(@RequestBody Hospital hospital)
+    public ResponseEntity<?> createHospital(@RequestBody Hospital hospital)
     {
         HospitalDto savedHospital = hospitalService.createHospital(hospital);
 

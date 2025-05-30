@@ -31,9 +31,10 @@
   <app-donors *ngIf="currentView === 'donors'"></app-donors>
   <app-hospital *ngIf="currentView === 'hospitals'"></app-hospital>
   <app-blood *ngIf="currentView === 'inventory'"></app-blood>
+  <app-admin-logs *ngIf="currentView === 'logs'"></app-admin-logs>
 </div>
 
 <!-- Optional: Show a message or redirect if NOT logged in -->
 <div *ngIf="!adminEmail" style="color: red; margin: 20px; font-weight: bold;">
-  You are not logged in. Please log in to access the admin panel.
+  You are not logged in. Please log in to access.
 </div>

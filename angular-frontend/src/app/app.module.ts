@@ -12,6 +12,10 @@ import { FormsModule } from '@angular/forms';
 import { HospitalComponent } from './hospital/hospital.component';
 import { BloodComponent } from './blood/blood.component';
 import { AdminloginComponent } from './adminlogin/adminlogin.component';
+import { HospitalUserHomeComponent } from './hospital-user/hospital-user-home/hospital-user-home.component';
+import { HospitalUserLoginComponent } from './hospital-user/hospital-user-login/hospital-user-login.component';
+import { AdminLogsComponent } from './admin-logs/admin-logs.component';
+
 
 @NgModule({
   declarations: [
@@ -22,6 +26,11 @@ import { AdminloginComponent } from './adminlogin/adminlogin.component';
     HospitalComponent,
     BloodComponent,
     AdminloginComponent,
+    HospitalUserHomeComponent,
+    HospitalUserLoginComponent,
+    AdminLogsComponent,
+    
+    
 
   ],
   imports: [

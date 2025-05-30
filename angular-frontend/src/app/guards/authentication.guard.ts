@@ -14,12 +14,12 @@ export class AuthenticationGuard implements CanActivate
     const adminEmail = localStorage.getItem('adminEmail');
     if (adminEmail) 
     {
-      // Admin is logged in
+      
       return true;
     } 
     else
     {
-      // Not logged in, redirect to login page
+      
       return this.router.createUrlTree(['/adminlogin']);
     }
   }

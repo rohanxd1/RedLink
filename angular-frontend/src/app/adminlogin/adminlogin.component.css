@@ -1,3 +1,4 @@
+
 /* Header Container */
 .header-container {
   width: 100%;
@@ -32,15 +33,46 @@
   font-weight: bold;
   margin: 0;
 }
+/* register container */
+/* Register Button Container */
+.register-button-container {
+  position: absolute;
+  right: 40px; /* Adjust distance from right edge */
+  top: 28px; /* Align vertically as needed */
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+/* Register Button */
+.register-btn {
+  background-color: transparent;
+  border: 1.5px solid white;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  white-space: nowrap;
+}
+.register-btn:hover {
+  background-color: white;
+  color: #d32f2f;
+}
+
+
 
 /* Centered Login Container */
 .login-page-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 90vh;
+  min-height: calc(100vh - 150px); 
+  /* padding-top: -50px; */
   background-color: #fff5f5;
 }
+
 
 /* Login Box Styling */
 .login-box {
@@ -140,3 +172,185 @@
 .secondary-btn:hover {
   background-color: #b71c1c;
 }
+
+
+.overlay-content .button-group {
+  display: flex;
+  /*  */
+  
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: -20px;
+  margin-bottom: -52px;
+
+}
+.overlay-content button {
+  padding: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 6px;
+  width: 200px;
+  height: 40px;
+  cursor: pointer;
+  /*  */
+}
+
+.overlay-content .primary-btn {
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  font-weight: 600;
+}
+
+.overlay-content .primary-btn:hover {
+  background-color: #b71c1c;
+}
+
+.overlay-content .secondary-btn {
+  background-color: #eee;
+  color: #333;
+  border: 1px solid #ccc;
+  font-weight: 600;
+  
+}
+
+.overlay-content .secondary-btn:hover {
+  background-color: #ddd;
+}
+/* ============================
+   Overlay Styles
+============================ */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.overlay-content {
+  background: #ffffff;
+  padding: 40px 50px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  
+}
+
+.overlay-content h3 {
+
+  font-weight: 700;
+  font-size: 26px;
+
+  margin-top: 0;
+  color: #ff0000;
+  /* font-size: 24px; */
+  margin-top: -5px;
+  padding-bottom: 10px;
+  /* font-weight: 600; */
+  text-align: center;
+  width: 100%;
+
+}
+
+.overlay-content form {
+  display: flex;
+  flex-direction: column;
+  margin-top: -20px;
+  gap: 2px;
+}
+
+/* ==== CHANGES START ==== */
+.overlay-content label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #444;
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+  margin-bottom: -20px;
+}
+/* ==== CHANGES END ==== */
+
+.overlay-content input,
+.overlay-content select {
+  margin-top: 6px;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.overlay-content .button-group-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 45px;
+  justify-content: center;
+  margin-top: .2mm;
+  /* width: 700px; */
+  
+}
+
+.overlay-content .error-text
+{
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    margin-top: -10px;;
+}
+
+.overlay-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+
+.overlay-content table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f2cccc;
+  font-weight: 600;
+  color: #444;
+}
+
+.overlay-content table td:first-child {
+  width: 40%;
+  color: #d32f2f;
+  text-align: right;
+  padding-right: 20px;
+}
+
+
+
+
+/* ===== End of Overlay Styles ===== */
+
+/* ============================
+   Success Message
+============================ */
+.success-overlay-message {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #4caf50;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  z-index: 1000;
+  animation: fadeOut 3s forwards;
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; }
+}
+/* ===== End of Success Message ===== */

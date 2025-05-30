@@ -9,28 +9,56 @@
 .header-bar {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   position: relative;
-  padding: 16px 0;
+  padding: 16px 60px;
 }
 
-/* Logo aligned to the left */
+/* Logo stays absolute on left */
 .logo {
   position: absolute;
   left: 60px;
-  /* bottom: 20px; */
-  top: 32px;;
+  top: 32px;
   color: white;
   font-size: 30px;
   font-weight: bold;
 }
 
-/* Admin Home text centered */
+/* Center header text */
 .header {
   color: white;
   font-size: 24px;
   font-weight: bold;
-  margin: 0;
+  margin: 0 auto;
+  text-align: center;
+  flex-grow: 1;
+}
+
+/* Wrap to reserve space for the button text */
+.button-container {
+  width: 160px; 
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Logout button */
+.log-out-btn {
+  background-color: transparent;
+  border: 1.5px solid white;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  white-space: nowrap;
+}
+
+/* Hover effect */
+.log-out-btn:hover {
+  background-color: white;
+  color: #d32f2f;
 }
 
 /* Navbar styles */
@@ -64,6 +92,7 @@
   font-weight: 700;
 }
 
+/* Main content spacing */
 .content-area {
   margin-top: 20px;
 }

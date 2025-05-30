@@ -81,6 +81,7 @@ export class BloodComponent {
   }
   
   // Confirm update 
+  showSuccessMessage=false;
   confirmUpdate(): void 
   {
     const updateObservables = [];
@@ -102,6 +103,8 @@ export class BloodComponent {
             .then(() => {
                            this.loadBlood();  // Refresh table
                            this.isUpdateOverlayVisible = false;
+                           this.showSuccessMessage= true;
+                          setTimeout(() => this.showSuccessMessage = false, 3000);
                         })
             .catch(error => {
                               this.errorMessage = 'Failed to update inventory.';

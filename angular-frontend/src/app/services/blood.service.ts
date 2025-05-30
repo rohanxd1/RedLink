@@ -17,18 +17,18 @@ export interface Blood
 })
 export class BloodService
 {
-
+  private baseUrl = 'http://localhost:8080/admin/blood';
   constructor(private http:HttpClient) {}
   
       getAllBlood(): Observable<Blood[]> 
         {
-          return this.http.get<Blood[]>(`http://localhost:8080/admin/blood/view-all`);
+          return this.http.get<Blood[]>(`http://localhost:8080/admin/blood/view-all`,{ withCredentials: true });
         }
         
         // update by group
         updateBloodUnits(blood: Blood): Observable<Blood> 
         {
-          return this.http.put<Blood>(`http://localhost:8080/admin/blood/update-units`, blood);
+          return this.http.put<Blood>(`http://localhost:8080/admin/blood/update-units`, blood,{ withCredentials: true });
         }
   
 }

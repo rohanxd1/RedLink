@@ -5,53 +5,89 @@
       <span style="color: rgb(121, 1, 1);" >Red</span><span >Link</span> 
     </div>
     <div class="header">Admin Login</div>
+
+    <!-- Register button -->
+     <div class="register-button-container">
+      <button  class="register-btn"  style="margin-left: auto; padding: 6px 12px; cursor: pointer;" (click)="onRegister()" >
+       Register
+      </button>
+    </div>
+
   </div>
 
+  
   
 </div>
 
 <div class="content-area">
     
       <div class="login-page-container">
-  <div class="login-box">
-    <h3>Admin Login</h3>
+          <div class="login-box">
+            <h3>Admin Login</h3>
 
-    <form (ngSubmit)="onLogin()" #loginForm="ngForm">
-      <label for="email">Email</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        [(ngModel)]="loginData.email"
-        required
-      />
+            <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+                <label for="email">Email</label>
+                  <input type="email" id="email" name="email" [(ngModel)]="loginData.email" required   />
 
-      <label for="password">Password</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        [(ngModel)]="loginData.password"
-        required
-      />
+                <label for="password">Password</label>
+                  <input type="password"  id="password" name="password"[(ngModel)]="loginData.password" required/>
 
-      <div *ngIf="errorMessage" class="error-text">
-        {{ errorMessage }}
+                <div *ngIf="errorMessage" class="error-text">
+                  {{ errorMessage }}
+                  </div>
+
+                <div class="button-group-container">
+                  <button type="submit" class="primary-btn" [disabled]="loginForm.invalid">
+                    Login
+                  </button>
+                  <button type="button" class="secondary-btn" (click)="onCancel()">
+                    Cancel
+                 </button>
+                </div>
+            </form>
+          </div>
       </div>
 
-      <div class="button-group-container">
-        <button type="submit" class="primary-btn" [disabled]="loginForm.invalid">
-          Login
-        </button>
-        <button type="button" class="secondary-btn" (click)="onCancel()">
-          Cancel
-        </button>
+  <!-- reg admin stuff -->
+   <div *ngIf="showRegOverlay" class="overlay">
+      <div class="overlay-content">
+          <h3 style="margin-bottom: -5px;">Create Admin Entry</h3>
+
+            <form (ngSubmit)="createAdmin()" style="gap: 25px;">
+
+            
+                <label>
+                    Name:
+                    <input type="text" [(ngModel)]="newAdmin.adminName" name="adminName" required />
+                </label>
+
+                <label>
+                    Mail:
+                        <input type="text" [(ngModel)]="newAdmin.adminMail" name="adminMail" required />
+                  </label>
+
+                <label>
+                            Password:
+                            <input type="password" [(ngModel)]="newAdmin.adminPassword" name="adminPassword" required />
+
+                </label>
+
+                <div class="button-group-container" style="margin-top: 20px;margin-bottom: -10px;">
+                  <button type="submit" class="primary-btn">Add Admin</button>
+                  <button type="button" class="secondary-btn" (click)="cancelReg()">Cancel</button>
+               </div>
+            </form>
+
+        <div *ngIf="createErrorOverlay" class="error-text" style="color: red; font-family: Arial, sans-serif; font-weight: 600; margin-bottom: -25px; margin-top: 5px;">
+             {{createError}}
+          </div>
       </div>
-    </form>
-  </div>
-</div>
+    </div>
 
-  
-
+     <!-- create success message -->
+      <div *ngIf="showCreateSuccessMessage" class="success-overlay-message">
+          admin created successfully!
+      </div>
+    <!-- create success message end -->
   
 </div>

@@ -6,16 +6,17 @@ import { HomeComponent } from './home/home.component';
 import { HospitalComponent } from './hospital/hospital.component';
 import { BloodComponent } from './blood/blood.component';
 import { AdminloginComponent } from './adminlogin/adminlogin.component';
+import { AuthenticationGuard } from './guards/authentication.guard';
 
 
 const routes: Routes = [
 
   { path: '', component: HomeComponent },
   {path: 'adminlogin', component:AdminloginComponent},
-  { path: 'adminhome', component: AdminHomeComponent },
-  {path:'donor',component:DonorsComponent},
-  {path:'hospital',component:HospitalComponent},
-  { path: 'inventory', component: BloodComponent }
+  { path: 'adminhome', component: AdminHomeComponent, canActivate: [AuthenticationGuard] },
+  { path: 'donor', component: DonorsComponent, canActivate: [AuthenticationGuard] },
+  { path: 'hospital', component: HospitalComponent, canActivate: [AuthenticationGuard] },
+  { path: 'inventory', component: BloodComponent, canActivate: [AuthenticationGuard] },
   // { path: 'logs', component: LogsComponent }
   
 

@@ -22,30 +22,30 @@ export class DonorService {
   // view all method
   getAllDonors(): Observable<DonorDto[]> 
   {
-  return this.http.get<DonorDto[]>(`http://localhost:8080/admin/donors/view-all`);
+  return this.http.get<DonorDto[]>(`http://localhost:8080/admin/donors/view-all`,{ withCredentials: true });
   }
 
   // creaye donor method
   createDonor(donor: DonorDto): Observable<DonorDto>
   {
-    return this.http.post<DonorDto>('http://localhost:8080/admin/donors/create',donor);
+    return this.http.post<DonorDto>('http://localhost:8080/admin/donors/create',donor,{ withCredentials: true });
   }
 
   // delete donor method
   deleteDonor(donorId: number) {
-  return this.http.delete(`http://localhost:8080/admin/donors/delete/${donorId}`, { responseType: 'text' });
+  return this.http.delete(`http://localhost:8080/admin/donors/delete/${donorId}`,{ withCredentials: true });
 }
 
   // update donor
   updateDonor(donorId: number,donor: DonorDto): Observable<DonorDto>
   {
-    return this.http.put<DonorDto>(`http://localhost:8080/admin/donors/update/${donorId}`,donor);
+    return this.http.put<DonorDto>(`http://localhost:8080/admin/donors/update/${donorId}`,donor,{ withCredentials: true });
   }
 
   // search donor
   findDonor(donorId:number): Observable<DonorDto>
   {
-    return this.http.get<DonorDto>(`http://localhost:8080/admin/donors/${donorId}`);
+    return this.http.get<DonorDto>(`http://localhost:8080/admin/donors/${donorId}`,{ withCredentials: true });
   }
 
 }

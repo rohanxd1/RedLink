@@ -1,40 +1,39 @@
-<div class="header-container">
-
+<div class="header-container" *ngIf="adminEmail">
   <div class="header-bar">
     <div class="logo"> 
-      <span style="color: rgb(121, 1, 1);" >Red</span><span >Link</span> 
+      <span style="color: rgb(121, 1, 1);">Red</span><span>Link</span> 
     </div>
-    <div class="header">Admin Home</div>
+
+    <div class="header" style="margin-left: 145px;">Admin Home</div>
+
+    <div class="button-container">
+      <button class="log-out-btn"
+              (mouseenter)="hovering = true"
+              (mouseleave)="hovering = false"
+              (click)="logout()">
+        {{ hovering ? 'Logout' : adminEmail }}
+      </button>
+    </div>
   </div>
 
   <nav class="navbar">
     <ul>
-      <li>
-        <a href="#" 
-           (click)="showView('inventory'); $event.preventDefault()" 
-           [class.active]="currentView === 'inventory'">Inventory</a>
-      </li>
-      <li>
-        <a href="#" 
-           (click)="showView('donors'); $event.preventDefault()" 
-           [class.active]="currentView === 'donors'">Donors</a>
-      </li>
-      <li>
-        <a href="#" 
-           (click)="showView('hospitals'); $event.preventDefault()" 
-           [class.active]="currentView === 'hospitals'">Hospitals</a>
-      </li>
-      <li>
-        <a href="#" 
-           (click)="showView('logs'); $event.preventDefault()" 
-           [class.active]="currentView === 'logs'">Logs</a>
-      </li>
+      <li><a href="#" (click)="showView('inventory'); $event.preventDefault()" [class.active]="currentView === 'inventory'">Inventory</a></li>
+      <li><a href="#" (click)="showView('donors'); $event.preventDefault()" [class.active]="currentView === 'donors'">Donors</a></li>
+      <li><a href="#" (click)="showView('hospitals'); $event.preventDefault()" [class.active]="currentView === 'hospitals'">Hospitals</a></li>
+      <li><a href="#" (click)="showView('logs'); $event.preventDefault()" [class.active]="currentView === 'logs'">Logs</a></li>
     </ul>
   </nav>
 </div>
 
-<div class="content-area">
+<!-- Only show content area if logged in -->
+<div class="content-area" *ngIf="adminEmail">
   <app-donors *ngIf="currentView === 'donors'"></app-donors>
-  <app-hospital *ngIf="currentView=='hospitals'"></app-hospital>
-  <app-blood *ngIf="currentView=='inventory'"></app-blood>
+  <app-hospital *ngIf="currentView === 'hospitals'"></app-hospital>
+  <app-blood *ngIf="currentView === 'inventory'"></app-blood>
+</div>
+
+<!-- Optional: Show a message or redirect if NOT logged in -->
+<div *ngIf="!adminEmail" style="color: red; margin: 20px; font-weight: bold;">
+  You are not logged in. Please log in to access the admin panel.
 </div>

@@ -2,11 +2,13 @@ package com.Rohan.RedLink.controller;
 
 
 import com.Rohan.RedLink.entity.Admin;
+import com.Rohan.RedLink.dto.AdminLoginRequest;
 import com.Rohan.RedLink.repository.AdminRepository;
 import com.Rohan.RedLink.service.AdminService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,9 +22,28 @@ public class AdminController {
     private final AdminRepository adminRepository;
     private  final AdminService adminService;
 
+
+
+
+    @PostMapping("/login")
+    public ResponseEntity<?> adminLogin(@RequestBody AdminLoginRequest loginRequest)
+    {
+        Admin admin = adminService.loginAdmin(loginRequest);
+        System.out.println(admin);
+        if (admin != null && loginRequest.getPassword().equals(admin.getAdminPassword()))
+        {
+            return ResponseEntity.ok(admin); // or return a DTO if needed
+        }
+        else
+        {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+        }
+    }
+
+
     @PostMapping("/create")
     public ResponseEntity<?> createAdmin(@RequestBody Admin admin)
-    {
+    {    System.out.println("Creating admin: " + admin);
         Admin savedAdmin= adminService.createAdmin(admin);
 
         if (savedAdmin == null)

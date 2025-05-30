@@ -33,30 +33,30 @@ export class HospitalService {
   // view hospitals
   getAllHospitals(): Observable<HospitalDto[]> 
     {
-    return this.http.get<HospitalDto[]>(`http://localhost:8080/admin/hospitals/view-all`);
+    return this.http.get<HospitalDto[]>(`http://localhost:8080/admin/hospitals/view-all`,{ withCredentials: true });
     }
 
   // creaye hospital method
     createHospital(hospital: HospitalEntity): Observable<HospitalDto>
     {
-      return this.http.post<HospitalDto>('http://localhost:8080/admin/hospitals/create',hospital);
+      return this.http.post<HospitalDto>('http://localhost:8080/admin/hospitals/create',hospital,{ withCredentials: true });
     }
 
     // update hosp
      updateHospital(hospId: number,hospital: HospitalDto): Observable<HospitalDto>
       {
-        return this.http.put<HospitalDto>(`http://localhost:8080/admin/hospitals/update/${hospId}`,hospital);
+        return this.http.put<HospitalDto>(`http://localhost:8080/admin/hospitals/update/${hospId}`,hospital,{ withCredentials: true });
       }
 
       // delete hosp
       deleteHospital(hospId: number)
       {
-        return this.http.delete(`http://localhost:8080/admin/hospitals/delete/${hospId}`,{ responseType: 'text' });
+        return this.http.delete(`http://localhost:8080/admin/hospitals/delete/${hospId}`,{ responseType: 'text', withCredentials: true});
       }
      
       // search Hisp
         findHospital(hospId:number): Observable<HospitalDto>
         {
-          return this.http.get<HospitalDto>(`http://localhost:8080/admin/hospitals/${hospId}`);
+          return this.http.get<HospitalDto>(`http://localhost:8080/admin/hospitals/${hospId}`,{ withCredentials: true });
         }
 }

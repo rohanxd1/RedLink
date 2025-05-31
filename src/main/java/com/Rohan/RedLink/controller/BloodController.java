@@ -1,5 +1,6 @@
 package com.Rohan.RedLink.controller;
 
+import com.Rohan.RedLink.dto.BloodInventoryUpdateRequest;
 import com.Rohan.RedLink.entity.Blood;
 import com.Rohan.RedLink.service.BloodService;
 import lombok.AllArgsConstructor;
@@ -44,8 +45,33 @@ public class BloodController
         else
         {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Blood group not found: " + blood.getBloodGroup());
+        }
     }
-}
+
+
+
+    @GetMapping("/check")
+    public ResponseEntity<?> checkBloodInventory(@RequestParam("group") String bloodGroup) {
+        Optional<Blood> bloodOpt = bloodService.getBloodByGroup(bloodGroup);
+        if (bloodOpt.isPresent()) {
+            return ResponseEntity.ok(bloodOpt.get());
+        } else {
+            return ResponseEntity.badRequest().body("Blood group not found");
+        }
+    }
+
+
+    @PutMapping("/reduce")
+    public ResponseEntity<?> updateBloodInventory(@RequestBody BloodInventoryUpdateRequest bloodRequest)
+    {
+        try {
+            Blood updated = bloodService.reduceUnits(bloodRequest.getBloodGroup(), bloodRequest.getUnitsToReduce());
+            return ResponseEntity.ok(updated);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 
 
 }

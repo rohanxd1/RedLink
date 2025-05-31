@@ -41,5 +41,25 @@ public class BloodService
         }
     }
 
+    // Check inventory units for a blood group
+    public Optional<Blood> getBloodByGroup(String bloodGroup)
+    {
+        return bloodRepository.findByBloodGroup(bloodGroup);
+    }
+
+    // Reduce available units of a blood group, return updated Blood entity or throw exception if insufficient
+    public Blood reduceUnits(String bloodGroup, float unitsToReduce) throws IllegalArgumentException
+    {
+        Blood blood = bloodRepository.findByBloodGroup(bloodGroup)
+                .orElseThrow(() -> new IllegalArgumentException("Blood group not found"));
+
+        if (blood.getAvailableUnits() < unitsToReduce) {
+            throw new IllegalArgumentException("Insufficient units");
+        }
+
+        blood.setAvailableUnits(blood.getAvailableUnits() - unitsToReduce);
+        return bloodRepository.save(blood);
+    }
+
 
 }

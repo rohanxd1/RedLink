@@ -12,6 +12,12 @@ export interface Blood
     
 }
 
+export interface BloodInventoryUpdateRequest {
+  bloodGroup: string;
+  unitsToReduce: number;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -30,5 +36,12 @@ export class BloodService
         {
           return this.http.put<Blood>(`http://localhost:8080/admin/blood/update-units`, blood,{ withCredentials: true });
         }
-  
+        
+
+        // reduce
+        reduceBloodUnits(request: BloodInventoryUpdateRequest): Observable<Blood> 
+        {
+          return this.http.put<Blood>(`${this.baseUrl}/reduce`, request, { withCredentials: true });
+        }
+
 }

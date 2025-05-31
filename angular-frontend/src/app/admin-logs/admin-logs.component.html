@@ -51,11 +51,13 @@
 
             <td>
               <select 
-                [value]="editedStatus[log.logId]" 
-                (change)="onStatusChange(log.logId, $any($event.target).value)">
-                <option value="UNCONFIRMED">UNCONFIRMED</option>
-                <option value="IN-TRANSIT">IN-TRANSIT</option>
-                <option value="DELIVERED">DELIVERED</option>
+                 [disabled]="originalStatus[log.logId] === 'DELIVERED'"
+                  [(ngModel)]="editedStatus[log.logId]"
+                  (change)="onStatusChange(log.logId, editedStatus[log.logId])"
+                >
+                  <option value="UNCONFIRMED">UNCONFIRMED</option>
+                  <option value="IN-TRANSIT">IN-TRANSIT</option>
+                  <option value="DELIVERED">DELIVERED</option>
               </select>
             </td>
 

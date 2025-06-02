@@ -15,6 +15,9 @@ import { AdminloginComponent } from './adminlogin/adminlogin.component';
 import { HospitalUserHomeComponent } from './hospital-user/hospital-user-home/hospital-user-home.component';
 import { HospitalUserLoginComponent } from './hospital-user/hospital-user-login/hospital-user-login.component';
 import { AdminLogsComponent } from './admin-logs/admin-logs.component';
+import { HospitalLogsComponent } from './hospital-user/hospital-logs/hospital-logs.component';
+import { RequestBloodComponent } from './hospital-user/request-blood/request-blood.component';
+import { UrgentlogsComponent } from './urgentlogs/urgentlogs.component';
 
 
 @NgModule({
@@ -29,6 +32,9 @@ import { AdminLogsComponent } from './admin-logs/admin-logs.component';
     HospitalUserHomeComponent,
     HospitalUserLoginComponent,
     AdminLogsComponent,
+    HospitalLogsComponent,
+    RequestBloodComponent,
+    UrgentlogsComponent,
     
     
 

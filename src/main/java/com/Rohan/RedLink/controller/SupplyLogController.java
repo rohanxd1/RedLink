@@ -48,8 +48,8 @@ public class SupplyLogController {
         return ResponseEntity.ok(supplyLog);
     }
 
-    @GetMapping("/hospitallogs")
-    public ResponseEntity<?> getLogsByHospitalMail(@RequestParam String mail) {
+    @GetMapping("/hospitallogs/{mail}")
+    public ResponseEntity<?> getLogsByHospitalMail(@PathVariable String mail) {
         List<SupplyLog> logs = supplyLogService.getSupplyLogsByHospitalMail(mail);
         if (logs == null || logs.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -57,4 +57,19 @@ public class SupplyLogController {
         }
         return ResponseEntity.ok(logs);
     }
+
+    @PutMapping("/updatehospitallog")
+    public ResponseEntity<?> updateHospitalLog(@RequestBody SupplyLog newSupplyLog)
+    {
+        SupplyLog updated = supplyLogService.updateHospitalUserSupplyLog(newSupplyLog);
+
+        if (updated == null)
+        {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No supply log found with ID: " + newSupplyLog.getLogId());
+        }
+
+        return ResponseEntity.ok(updated);
+    }
+
 }

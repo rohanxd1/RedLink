@@ -27,6 +27,19 @@ export interface HospitalUserLoginRequest {
 }
 
 
+export interface SupplyLog 
+{
+  logId?: number;
+  hospitalMail: string;
+  bloodGroup: string;
+  unitsRequired: number;
+  dateOfRequest: string;
+  dateOfTransit: string;
+  dateOfDelivery: string;
+  status: string;
+  managedBy: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -43,5 +56,28 @@ export class HospitalUserService {
     {
       return this.http.post<HospitalDto>(`http://localhost:8080/hospitaluser/login`, loginRequest, {withCredentials: true});
     }
+
+
+
+    createSupplyLog(supplyLog: SupplyLog): Observable<SupplyLog> 
+    {
+      return this.http.post<SupplyLog>('http://localhost:8080/supplylogs/create',supplyLog,{ withCredentials: true });
+    }
+
+
+
+
+
+    viewHospitalLogs(mail: string): Observable<SupplyLog[]> 
+    {
+      return this.http.get<SupplyLog[]>(`http://localhost:8080/supplylogs/hospitallogs/${mail}`, {withCredentials: true});
+    }
+
+    updateHospitalLog(log: SupplyLog): Observable<SupplyLog>
+    {
+      return this.http.put<SupplyLog>('http://localhost:8080/supplylogs/updatehospitallog',log,{ withCredentials: true });
+    }
+
+
     
 }

@@ -25,14 +25,14 @@
   </nav>
 </div>
 
-<!-- Only show content area if logged in -->
+
 <div class="content-area" *ngIf="hospitalEmail">
-  <!-- <app-donors *ngIf="currentView === 'donors'"></app-donors>
-  <app-hospital *ngIf="currentView === 'hospitals'"></app-hospital>
-  <app-blood *ngIf="currentView === 'inventory'"></app-blood> -->
+
+  <app-request-blood *ngIf="currentView==='request'"></app-request-blood>
+  <app-hospital-logs *ngIf="currentView === 'logs'"></app-hospital-logs>
 </div>
 
-<!-- Optional: Show a message or redirect if NOT logged in -->
+
 <div *ngIf="!hospitalEmail" style="color: red; margin: 20px; font-weight: bold;">
   You are not logged in. Please log in to access.
 </div>

@@ -10,10 +10,10 @@ import { Router } from '@angular/router';
 export class AdminHomeComponent 
 {
   constructor(private router: Router) {}
-   currentView: 'inventory' | 'donors' | 'hospitals' | 'logs' = 'inventory';
+   currentView: 'inventory' | 'donors' | 'hospitals' | 'logs'|'urgentlogs' = 'inventory';
 
   // Function to set the current view on navbar click
-  showView(view: 'inventory' | 'donors' | 'hospitals' | 'logs') 
+  showView(view: 'inventory' | 'donors' | 'hospitals' | 'logs'|'urgentlogs') 
   {
     this.currentView = view;
   }

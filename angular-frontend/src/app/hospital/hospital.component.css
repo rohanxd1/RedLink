@@ -114,6 +114,20 @@
 /* ============================
    Table Styles
 ============================ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.anim
+{
+  animation: fadeIn 0.6s ease-in-out;
+}
 .data-table {
   width: 100%;
   border-collapse: collapse;
@@ -123,6 +137,8 @@
   word-wrap: break-word;
   word-break: break-word;
   overflow: hidden;
+    
+
 }
 
 .data-table thead {

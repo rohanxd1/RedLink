@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminSupplyLogService, SupplyLog } from '../services/admin-supply-log.service';
+import { SupplyLog, UrgentlogsService } from '../services/urgentlogs.service';
 import { HttpClient } from '@angular/common/http';
+import { HospitalUserService } from '../services/hospital-user.service';
 
 @Component({
-  selector: 'app-admin-logs',
+  selector: 'app-urgentlogs',
   standalone: false,
-  templateUrl: './admin-logs.component.html',
-  styleUrls: ['./admin-logs.component.css']
+  templateUrl: './urgentlogs.component.html',
+  styleUrl: './urgentlogs.component.css'
 })
-export class AdminLogsComponent implements OnInit 
+export class UrgentlogsComponent implements OnInit 
 {
-
   logs: SupplyLog[] = [];  
   originalStatus: { [logId: number]: string } = {};  
   editedStatus: { [logId: number]: string } = {};    
@@ -19,7 +19,7 @@ export class AdminLogsComponent implements OnInit
 
   private bloodApiBase = 'http://localhost:8080/admin/blood';
 
-  constructor(private supplyLogService: AdminSupplyLogService, private http: HttpClient) {}
+  constructor(private supplyLogService: UrgentlogsService,private hospitalUserService:HospitalUserService, private http: HttpClient) {}
 
   ngOnInit(): void 
   {
@@ -107,7 +107,8 @@ export class AdminLogsComponent implements OnInit
    * Called when the 'Confirm' button is clicked.
    * Updates status and handles inventory reduction if required.
    */
-  onConfirm(log: SupplyLog): void {
+  onConfirm(log: SupplyLog): void 
+  {
     const updatedStatus = this.editedStatus[log.logId];
 
     // Skip update if status hasn't changed
@@ -135,15 +136,33 @@ export class AdminLogsComponent implements OnInit
           this.editedStatus[log.logId] = this.originalStatus[log.logId]; // Revert UI
         }
       });
-    } else {
-      // For other statuses (e.g., DELIVERED), just update the supply log
-      this.updateSupplyLogStatus(log, updatedStatus, managedBy);
-    }
+        }  
+        else if (updatedStatus === 'DELIVERED') 
+          {
+           
+            this.updateSupplyLogStatus(log, updatedStatus, managedBy);
+
+            // Save to hospitallogs
+            const supplyLogCopy = { ...log, status: updatedStatus, managedBy }; 
+            this.hospitalUserService.createSupplyLog(supplyLogCopy).subscribe({
+              next: () => {
+                console.log('Supply log saved to hospital side.');
+              },
+              error: (err) => {
+                console.error('Failed to save log to hospital side:', err);
+              }
+            });
+
+           } 
+        else 
+        {
+           
+           this.updateSupplyLogStatus(log, updatedStatus, managedBy);
+        }
   }
 
-  /**
-   * Updates  supply log .
-   */
+  
+   
   private updateSupplyLogStatus(log: SupplyLog, updatedStatus: string, managedBy: string): void {
     const updatedLog = {
       ...log, // Spread existing log data
@@ -174,4 +193,5 @@ export class AdminLogsComponent implements OnInit
   {
     this.errorMessage = null;
   }
+
 }

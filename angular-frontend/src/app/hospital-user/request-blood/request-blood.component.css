@@ -1,0 +1,128 @@
+.section-container {
+  /* padding: 30px; */
+  background-color: #fff5f5;
+  color: #b71c1c;
+  min-height: 80vh;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.request-box {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  border-left: 8px solid #d32f2f;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.request-box h2 {
+  margin-bottom: 20px;
+  color: #d32f2f;
+  text-align: center;
+}
+
+.request-box label {
+  display: block;
+  margin: 12px 0 6px;
+  font-weight: bold;
+  color: #333;
+}
+
+
+.request-box select {
+  appearance: none;
+  width:90%;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path fill='%23d32f2f' d='M0 0l5 6 5-6z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+  padding: 10px;
+  border: 2px solid #d32f2f;
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
+}
+
+
+/* .request-box select, */
+.request-box input[type="number"] {
+  width: 85%;
+  padding: 10px;
+  border: 2px solid #d32f2f;
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
+}
+
+.urgent-container {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.urgent-container input[type="checkbox"] {
+  margin-right: 10px;
+  accent-color: #d32f2f;
+}
+
+button.greyed-out:disabled {
+  background-color: #f0f0f0 !important;
+  color: #888 !important;
+  cursor: default;
+  pointer-events: none;
+}
+
+.request-box button {
+  margin-top: 20px;
+  background-color: #d32f2f;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.request-box button:hover {
+  background-color: #b71c1c;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+
+
+
+
+ /* ============================
+    Success Message Overlay
+  ============================ */
+  .success-overlay-message {
+    position: fixed;
+    top: 125px;
+    right: 20px;
+    background-color: #4caf50cc;
+    color: white;
+    padding: 16px 22px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+    font-family: Arial, sans-serif;
+    z-index: 105;
+  }

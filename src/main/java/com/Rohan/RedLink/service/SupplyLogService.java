@@ -4,6 +4,7 @@ import com.Rohan.RedLink.entity.SupplyLog;
 import com.Rohan.RedLink.repository.SupplyLogRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,8 +17,13 @@ public class SupplyLogService
 
     private final SupplyLogRepository supplyLogRepository;
 
+
     public SupplyLog createSupplyLog(SupplyLog supplyLog)
     {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = LocalDateTime.now().format(formatter);
+        supplyLog.setDateOfRequest(formattedDate);
+
         return supplyLogRepository.save(supplyLog);
     }
 
@@ -71,4 +77,20 @@ public class SupplyLogService
     public List<SupplyLog> getSupplyLogsByHospitalMail(String hospitalMail) {
         return supplyLogRepository.findByHospitalMail(hospitalMail);
     }
+
+    public SupplyLog updateHospitalUserSupplyLog(SupplyLog newSupplyLog) {
+        SupplyLog existingSupplyLog = supplyLogRepository.findById(newSupplyLog.getLogId()).orElse(null);
+
+        if (existingSupplyLog != null)
+        {
+
+                existingSupplyLog.setBloodGroup(newSupplyLog.getBloodGroup());
+                existingSupplyLog.setUnitsRequired(newSupplyLog.getUnitsRequired());
+                return supplyLogRepository.save(existingSupplyLog);
+
+        }
+       return existingSupplyLog;
+    }
+
+
 }

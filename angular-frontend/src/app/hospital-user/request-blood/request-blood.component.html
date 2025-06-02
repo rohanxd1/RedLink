@@ -1,0 +1,45 @@
+<div class="section-container">
+    
+
+  <div class="request-box">
+    
+  <h2>Request Blood</h2>
+
+  <form #bloodForm="ngForm" (ngSubmit)="onSubmit()">
+  <label for="bloodGroup">Blood Group:</label>
+  <select id="bloodGroup" [(ngModel)]="selectedBloodGroup" name="bloodGroup" required>
+    <option value="" disabled selected>Select Blood Group</option>
+    <option *ngFor="let bg of bloodGroups" [value]="bg">{{ bg }}</option>
+  </select>
+
+  <label for="unitsRequired">Units Required:</label>
+  <input
+    id="unitsRequired"
+    type="number"
+    step="0.1"
+    min="0.1"
+    [(ngModel)]="unitsRequired"
+    name="unitsRequired"
+    required
+  />
+
+  <label>
+    <input type="checkbox" [(ngModel)]="urgent" name="urgent" />
+    Urgent
+  </label>
+
+  
+  <button type="submit" [disabled]="!bloodForm.form.valid || (unitsRequired ?? 0) <= 0 " [class.greyed-out]="!bloodForm.form.valid || (unitsRequired ?? 0) <= 0 ">
+    Submit
+  </button>
+</form>
+
+</div>
+
+
+
+</div>
+
+<div *ngIf="showSuccessMessage" class="success-overlay-message">
+    Request success
+  </div>

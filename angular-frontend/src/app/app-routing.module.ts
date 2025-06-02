@@ -11,6 +11,9 @@ import { HospitalUserHomeComponent } from './hospital-user/hospital-user-home/ho
 import { HospitalUserLoginComponent } from './hospital-user/hospital-user-login/hospital-user-login.component';
 import { HospitalAuthGuard } from './guards/hospital-auth.guard';
 import { AdminLogsComponent } from './admin-logs/admin-logs.component';
+import { HospitalLogsComponent } from './hospital-user/hospital-logs/hospital-logs.component';
+import { RequestBloodComponent } from './hospital-user/request-blood/request-blood.component';
+import { UrgentlogsComponent } from './urgentlogs/urgentlogs.component';
 
 
 const routes: Routes = [
@@ -21,10 +24,13 @@ const routes: Routes = [
   { path: 'donor', component: DonorsComponent, canActivate: [AuthenticationGuard] },
   { path: 'hospital', component: HospitalComponent, canActivate: [AuthenticationGuard] },
   { path: 'inventory', component: BloodComponent, canActivate: [AuthenticationGuard] },
-  { path: 'logs', component: AdminLogsComponent },
+  { path: 'logs', component: AdminLogsComponent,canActivate: [AuthenticationGuard] },
+  { path: 'urgentlogs', component:UrgentlogsComponent,canActivate: [AuthenticationGuard] },
   // hospital users
   { path: 'hospitaluserlogin', component: HospitalUserLoginComponent },
-  { path: 'hospitaluserhome', component: HospitalUserHomeComponent, canActivate: [HospitalAuthGuard] }
+  { path: 'hospitaluserhome', component: HospitalUserHomeComponent, canActivate: [HospitalAuthGuard] },
+  { path: 'requestblood', component: RequestBloodComponent, canActivate: [HospitalAuthGuard] },
+  {path:'hospitallogs',component:HospitalLogsComponent, canActivate:[HospitalAuthGuard]}
   
 
 ];

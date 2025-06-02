@@ -21,7 +21,8 @@
       <li><a href="#" (click)="showView('inventory'); $event.preventDefault()" [class.active]="currentView === 'inventory'">Inventory</a></li>
       <li><a href="#" (click)="showView('donors'); $event.preventDefault()" [class.active]="currentView === 'donors'">Donors</a></li>
       <li><a href="#" (click)="showView('hospitals'); $event.preventDefault()" [class.active]="currentView === 'hospitals'">Hospitals</a></li>
-      <li><a href="#" (click)="showView('logs'); $event.preventDefault()" [class.active]="currentView === 'logs'">Logs</a></li>
+      <li><a href="#" (click)="showView('logs'); $event.preventDefault()" [class.active]="currentView === 'logs'">Requests</a></li>
+      <li><a href="#" (click)="showView('urgentlogs'); $event.preventDefault()" [class.active]="currentView === 'urgentlogs'">Urgent Requests</a></li>
     </ul>
   </nav>
 </div>
@@ -32,6 +33,7 @@
   <app-hospital *ngIf="currentView === 'hospitals'"></app-hospital>
   <app-blood *ngIf="currentView === 'inventory'"></app-blood>
   <app-admin-logs *ngIf="currentView === 'logs'"></app-admin-logs>
+  <app-urgentlogs *ngIf="currentView === 'urgentlogs'"></app-urgentlogs>
 </div>
 
 <!-- Optional: Show a message or redirect if NOT logged in -->

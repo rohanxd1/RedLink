@@ -79,6 +79,10 @@ export class HospitalUserService {
       return this.http.put<SupplyLog>('http://localhost:8080/supplylogs/updatehospitallog',log,{ withCredentials: true });
     }
 
+    viewProfile(mail:string):Observable<HospitalDto>
+    {
+      return this.http.get<HospitalDto>(`http://localhost:8080/hospitaluser/profile`,{ params: {mail} ,withCredentials: true });
+    }
 
     
 }

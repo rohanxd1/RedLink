@@ -1,13 +1,26 @@
 /* main container... */
 
-.donors-container 
-{
+.donors-container {
   padding: 30px;
-  background-color: #fff5f5;
   color: #b71c1c;
   min-height: 80vh;
   font-family: Arial, sans-serif;
+  position: relative;
 }
+
+.donors-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: url('/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  filter: blur(4px);
+  z-index: -1;
+}
+
 .anim
 {
     animation: fadeIn 0.6s ease-in-out;

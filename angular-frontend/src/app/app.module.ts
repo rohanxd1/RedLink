@@ -18,6 +18,7 @@ import { AdminLogsComponent } from './admin-logs/admin-logs.component';
 import { HospitalLogsComponent } from './hospital-user/hospital-logs/hospital-logs.component';
 import { RequestBloodComponent } from './hospital-user/request-blood/request-blood.component';
 import { UrgentlogsComponent } from './urgentlogs/urgentlogs.component';
+import { ProfileComponent } from './hospital-user/profile/profile.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { UrgentlogsComponent } from './urgentlogs/urgentlogs.component';
     HospitalLogsComponent,
     RequestBloodComponent,
     UrgentlogsComponent,
+    ProfileComponent,
     
     
 

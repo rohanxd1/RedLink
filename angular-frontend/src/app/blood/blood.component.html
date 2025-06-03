@@ -4,7 +4,7 @@
   <div *ngIf="currentView === 'list'">
 
     <div class="button-group-container">
-      <button class="primary-btn" (click)="updateOverlay()">Update</button>
+      <button class="primary-btn" style="margin-top: 20px;" (click)="updateOverlay()">Update</button>
     </div>
 
     <div *ngIf="errorMessage" class="error-box" (click)="clearError()">

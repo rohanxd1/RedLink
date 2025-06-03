@@ -51,4 +51,16 @@ public class HospitalUserController
         return ResponseEntity.ok(savedHospital);
     }
 
+    @GetMapping("/profile")
+    public ResponseEntity<?> viewProfile(@RequestParam String mail)
+    {
+        HospitalDto profile = hospitalService.viewProfile(mail);
+        if (profile == null) {
+            String message = "Error: User not found";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        return ResponseEntity.ok(profile);
+    }
+
+
 }

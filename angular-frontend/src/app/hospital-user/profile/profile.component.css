@@ -1,0 +1,74 @@
+.section-container {
+  position: relative; 
+  color: #3e3e3e;
+  min-height: 84.5vh; 
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 60px;
+  margin: 0; 
+  overflow: hidden; 
+}
+
+/* Blurred background via pseudo element */
+.section-container::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: url('/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  filter: blur(4px);
+  /* transform: scale(1); */
+  z-index: -1; /* place behind content */
+}
+
+.profile-card {
+  background: white;
+  border-left: 6px solid #d32f2f;
+  padding: 25px 30px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 8px 25px rgba(211, 47, 47, 0.2);
+  border-radius: 12px;
+  animation: fadeIn 0.8s ease-out;
+  position: relative; /* ensure it stays above the blurred bg */
+  z-index: 1;
+}
+
+.profile-card h2 {
+  color: #d32f2f;
+  margin-bottom: 20px;
+  font-weight: 700;
+  font-size: 2rem;
+  letter-spacing: 1.2px;
+}
+
+.profile-card p {
+  font-size: 1.1rem;
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+.profile-card strong {
+  color: #d32f2f;
+}
+
+.error-card {
+  background-color: #fdecea;
+  border-left: 6px solid #d32f2f;
+  color: #b71c1c;
+  font-weight: 600;
+  max-width: 600px;
+  padding: 20px 25px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(211, 47, 47, 0.2);
+  animation: fadeIn 0.8s ease-out;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

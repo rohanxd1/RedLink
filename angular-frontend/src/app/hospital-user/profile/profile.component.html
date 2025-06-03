@@ -1,0 +1,16 @@
+<div class="section-container" *ngIf="profile">
+  <div class="profile-card animate-fade-in">
+    <h2>{{ profile.hospitalName }}</h2>
+    <p><strong>ID:</strong> {{ profile.hospitalId }}</p>
+    <p><strong>Coordinator:</strong> {{ profile.hospitalCoordinator }}</p>
+    <p><strong>Phone:</strong> {{ profile.hospitalPh }}</p>
+    <p><strong>Email:</strong> {{ profile.hospitalMail }}</p>
+    <p><strong>Address:</strong> {{ profile.hospitalAddress }}</p>
+  </div>
+</div>
+
+<div class="section-container" *ngIf="!profile && errorMessage">
+  <div class="error-card animate-fade-in">
+    {{ errorMessage }}
+  </div>
+</div>

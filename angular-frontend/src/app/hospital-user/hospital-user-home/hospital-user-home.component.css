@@ -1,8 +1,19 @@
 /* Outer container for header and navbar */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 .header-container {
-  width: 100%;
+  width: 100%;;
   background-color: #d32f2f;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom:-20px ;
 }
 
 /* Flex layout for logo and header */

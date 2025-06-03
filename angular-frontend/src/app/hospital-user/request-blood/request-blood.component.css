@@ -1,12 +1,26 @@
 .section-container {
-  /* padding: 30px; */
-  background-color: #fff5f5;
+  position: relative; /* for ::before positioning */
   color: #b71c1c;
-  min-height: 80vh;
+  min-height: 84.5vh;
   font-family: Arial, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0; /* remove padding since it’s commented out */
+  margin: 0; /* reset margin */
+  overflow: hidden; /* to contain blurred background */
+}
+
+/* Blurred background */
+.section-container::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: url('/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  filter: blur(4px);
+  
+  z-index: -1; /* behind content */
 }
 
 .request-box {
@@ -18,6 +32,8 @@
   max-width: 400px;
   border-left: 8px solid #d32f2f;
   animation: fadeIn 0.6s ease-in-out;
+  position: relative; /* above blur */
+  z-index: 1;
 }
 
 .request-box h2 {
@@ -33,10 +49,9 @@
   color: #333;
 }
 
-
 .request-box select {
   appearance: none;
-  width:90%;
+  width: 90%;
   background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path fill='%23d32f2f' d='M0 0l5 6 5-6z'/></svg>");
   background-repeat: no-repeat;
   background-position: right 10px center;
@@ -48,8 +63,6 @@
   font-size: 14px;
 }
 
-
-/* .request-box select, */
 .request-box input[type="number"] {
   width: 85%;
   padding: 10px;
@@ -105,24 +118,19 @@ button.greyed-out:disabled {
   }
 }
 
-
-
-
-
-
- /* ============================
-    Success Message Overlay
-  ============================ */
-  .success-overlay-message {
-    position: fixed;
-    top: 125px;
-    right: 20px;
-    background-color: #4caf50cc;
-    color: white;
-    padding: 16px 22px;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    font-weight: 600;
-    font-family: Arial, sans-serif;
-    z-index: 105;
-  }
+/* ============================
+   Success Message Overlay
+   ============================ */
+.success-overlay-message {
+  position: fixed;
+  top: 125px;
+  right: 20px;
+  background-color: #4caf50cc;
+  color: white;
+  padding: 16px 22px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+  font-family: Arial, sans-serif;
+  z-index: 105;
+}

@@ -82,6 +82,11 @@ public class HospitalService
         return hospital;
     }
 
-
+    public HospitalDto viewProfile(String mail)
+    {
+        Hospital hospital=hospitalRepository.findByHospitalMail(mail)
+                .orElse(null);
+        return hospitalMapper.toDto(hospital);
+    }
 
 }

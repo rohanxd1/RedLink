@@ -2,12 +2,28 @@
    Container Section
 ============================ */
 .section-container {
+  position: relative;
+  overflow: hidden; /* Make sure the pseudo-element doesn't overflow */
   padding: 30px;
-  background-color: #fff5f5;
   color: #b71c1c;
-  min-height: 80vh;
+  min-height: 76.5vh;
   font-family: Arial, sans-serif;
+  z-index: 1;
 }
+
+.section-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: url('/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  filter: blur(4px); /* adjust the blur level */
+  z-index: -1; /* push the blurred layer behind the content */
+}
+
 
 /* ============================
    Header Bar Section

@@ -27,7 +27,7 @@
 
 
 <div class="content-area" *ngIf="hospitalEmail">
-
+  <app-profile *ngIf="currentView==='profile'"></app-profile>
   <app-request-blood *ngIf="currentView==='request'"></app-request-blood>
   <app-hospital-logs *ngIf="currentView === 'logs'"></app-hospital-logs>
 </div>

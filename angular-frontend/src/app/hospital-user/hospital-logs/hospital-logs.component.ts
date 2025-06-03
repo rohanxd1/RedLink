@@ -11,7 +11,7 @@ export class HospitalLogsComponent implements OnInit {
 
   hospitalMail = localStorage.getItem('hospitalEmail');
   logs: SupplyLog[] = [];
-  editableLogs: any[] = []; // stores editable copies to track changes
+  editableLogs: any[] = []; 
   bloodGroups: string[] = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
   showSuccessMessage = false;
   errorMessage: string | null = null;
@@ -75,6 +75,6 @@ export class HospitalLogsComponent implements OnInit {
   }
 
   cancelChanges(index: number): void {
-    this.editableLogs[index] = { ...this.logs[index] }; // reset to original
+    this.editableLogs[index] = { ...this.logs[index] }; 
   }
 }

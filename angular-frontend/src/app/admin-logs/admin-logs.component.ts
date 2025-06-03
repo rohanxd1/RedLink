@@ -33,7 +33,7 @@ export class AdminLogsComponent implements OnInit
         next: data => {
           // Sort logs descending by logId (latest first)
           this.logs = data.sort((a, b) => b.logId - a.logId);
-          // Initialize status trackers -> use cheyyal when change happen
+         
           this.logs.forEach(log => 
             {
               this.originalStatus[log.logId] = log.status;
@@ -49,122 +49,123 @@ export class AdminLogsComponent implements OnInit
    // If 'IN-TRANSIT' is selected, checks if enough blood units are available.
    
   async onStatusChange(logId: number, newStatus: string): Promise<void> 
+{
+  if (newStatus === 'IN-TRANSIT') 
   {
-    if (newStatus === 'IN-TRANSIT') 
+    const log = this.logs.find(l => l.logId === logId);
+    if (!log) return;
+
+    try {
+      // Encode the blood group to handle special characters like '+'
+      const encodedBloodGroup = encodeURIComponent(log.bloodGroup);
+
+      
+      const blood = await this.http.get<{ availableUnits: number }>(
+        `${this.bloodApiBase}/check?group=${encodedBloodGroup}`
+      ).toPromise();
+
+      if (!blood || typeof blood.availableUnits !== 'number') 
       {
-        const log = this.logs.find(l => l.logId === logId); // Find the relevant log
-        if (!log) return;
-
-        try {
-          //check available units for this blood group
-          const blood = await this.http.get<{ availableUnits: number }>(`${this.bloodApiBase}/check?group=${log.bloodGroup}`).toPromise();
-
-          // Handle missing or wrong responses
-          if (!blood || typeof blood.availableUnits !== 'number') 
-          {
-            alert('Could not retrieve blood inventory.');
-            this.editedStatus[logId] = this.originalStatus[logId]; // Revert UI
-            return;
-          }
-
-          // Show alert if available units are less than required
-          if (blood.availableUnits < log.unitsRequired)
-             {
-                alert(`Insufficient units. Available = ${blood.availableUnits} units.`);
-                this.editedStatus[logId] = this.originalStatus[logId]; // Revert UI
-                return;
-             }
-
-          // Sufficient units: allow the change
-          this.editedStatus[logId] = newStatus;
-
-        } 
-        catch (error) 
-        {
-          alert('Error checking blood inventory.');
-          this.editedStatus[logId] = this.originalStatus[logId]; // Revert UI
-        }
+        alert('Could not retrieve blood inventory.');
+        this.editedStatus[logId] = this.originalStatus[logId];
+        return;
       }
-      else 
+
+      if (blood.availableUnits < log.unitsRequired)
       {
-        
-        this.editedStatus[logId] = newStatus;
+        alert(`Insufficient units. Available = ${blood.availableUnits} units.`);
+        this.editedStatus[logId] = this.originalStatus[logId];
+        return;
       }
+
+      this.editedStatus[logId] = newStatus;
+
+    } catch (error) {
+      alert('Error checking blood inventory.');
+      this.editedStatus[logId] = this.originalStatus[logId];
+    }
+  } 
+  else 
+  {
+    this.editedStatus[logId] = newStatus;
   }
+}
 
-  // Returns true if current status is different from original (i.e., editable)
+
+  
   canCancel(logId: number): boolean 
   {
     return this.editedStatus[logId] !== this.originalStatus[logId];
   }
 
-  // Reverts the edited status back to the original
+  
   onCancel(logId: number): void {
     this.editedStatus[logId] = this.originalStatus[logId];
   }
 
-  /**
-   * Called when the 'Confirm' button is clicked.
-   * Updates status and handles inventory reduction if required.
-   */
+  
   onConfirm(log: SupplyLog): void {
     const updatedStatus = this.editedStatus[log.logId];
 
-    // Skip update if status hasn't changed
-    if (updatedStatus === this.originalStatus[log.logId]) {
-      return;
-    }
+    
+    if (updatedStatus === this.originalStatus[log.logId]) 
+      {
+        return;
+      }
 
-    const managedBy = localStorage.getItem('adminEmail') || ''; // Get admin email
+    const managedBy = localStorage.getItem('adminEmail') || ''; 
 
-    // If status is being set to IN-TRANSIT, reduce inventory first
-    if (updatedStatus === 'IN-TRANSIT') {
-      const reduceRequest = {
-        bloodGroup: log.bloodGroup,
-        unitsToReduce: log.unitsRequired
-      };
+    
+    if (updatedStatus === 'IN-TRANSIT') 
+      {
+      const reduceRequest =
+       {
+          bloodGroup: log.bloodGroup,
+          unitsToReduce: log.unitsRequired
+        };
 
-      // Call API to reduce blood inventory
+     
       this.http.put(`${this.bloodApiBase}/reduce`, reduceRequest).subscribe({
-        next: () => {
-          // After reducing inventory, update the supply log
-          this.updateSupplyLogStatus(log, updatedStatus, managedBy);
-        },
+        next: () => 
+          {
+         
+            this.updateSupplyLogStatus(log, updatedStatus, managedBy);
+          },
         error: (err) => {
           alert(`Failed to reduce inventory: ${err.error || 'Unknown error'}`);
-          this.editedStatus[log.logId] = this.originalStatus[log.logId]; // Revert UI
+          this.editedStatus[log.logId] = this.originalStatus[log.logId]; 
         }
       });
-    } else {
-      // For other statuses (e.g., DELIVERED), just update the supply log
-      this.updateSupplyLogStatus(log, updatedStatus, managedBy);
-    }
+    } 
+    else
+     {
+        
+        this.updateSupplyLogStatus(log, updatedStatus, managedBy);
+      }
   }
 
-  /**
-   * Updates  supply log .
-   */
+  
   private updateSupplyLogStatus(log: SupplyLog, updatedStatus: string, managedBy: string): void {
     const updatedLog = {
-      ...log, // Spread existing log data
+      ...log, 
       status: updatedStatus,
-      managedBy: managedBy // Track who changed the status
+      managedBy: managedBy 
     };
 
-    // Send updated log to backend
+  
     this.supplyLogService.updateSupplyLog(log.logId, updatedLog).subscribe({
       next: (resp) => {
-        // Update UI state to reflect changes
+        
         this.originalStatus[log.logId] = resp.status;
         this.editedStatus[log.logId] = resp.status;
         this.showSuccessMessage = true;
-        setTimeout(() => this.showSuccessMessage = false, 3000); // Hide success message after 3s
+        setTimeout(() => this.showSuccessMessage = false, 3000);
         this.errorMessage = null;
-        this.loadLogs(); // Reload all logs to refresh data
+        this.loadLogs(); 
       },
       error: () => {
         this.errorMessage = 'Failed to update the log.';
-        this.editedStatus[log.logId] = this.originalStatus[log.logId]; // Revert status
+        this.editedStatus[log.logId] = this.originalStatus[log.logId]; 
       }
     });
   }

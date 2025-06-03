@@ -39,4 +39,7 @@ public class SupplyLog {
 
     @Column(nullable = true, length = 100)
     private String managedBy ="UNCONFIRMED";
+
+    @Column(nullable = true)
+    private Boolean Urgent=false;
 }

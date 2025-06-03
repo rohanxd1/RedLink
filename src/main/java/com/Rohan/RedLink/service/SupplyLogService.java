@@ -49,23 +49,26 @@ public class SupplyLogService
             switch (newStatus)
             {
                 case "IN-TRANSIT":
-                                    existingSupplyLog.setDateOfTransit(now);
-                                    existingSupplyLog.setDateOfDelivery("UNCONFIRMED");
-                                    break;
+                    existingSupplyLog.setDateOfTransit(now);
+                    existingSupplyLog.setDateOfDelivery("UNCONFIRMED");
+                    break;
 
                 case "DELIVERED":
-                                    if ("UNCONFIRMED".equals(existingSupplyLog.getDateOfTransit()))
-                                    {
-                                        existingSupplyLog.setDateOfTransit(now);
-                                    }
-                                    existingSupplyLog.setDateOfDelivery(now);
-                                    break;
+                    if ("UNCONFIRMED".equals(existingSupplyLog.getDateOfTransit()))
+                    {
+                        existingSupplyLog.setDateOfTransit(now);
+                    }
+                    existingSupplyLog.setDateOfDelivery(now);
+
+                    // Set urgent to false when delivered
+                    existingSupplyLog.setUrgent(false);
+                    break;
 
                 case "UNCONFIRMED":
                 default:
-                                    existingSupplyLog.setDateOfTransit("UNCONFIRMED");
-                                    existingSupplyLog.setDateOfDelivery("UNCONFIRMED");
-                                    break;
+                    existingSupplyLog.setDateOfTransit("UNCONFIRMED");
+                    existingSupplyLog.setDateOfDelivery("UNCONFIRMED");
+                    break;
             }
 
             return supplyLogRepository.save(existingSupplyLog);
@@ -73,6 +76,7 @@ public class SupplyLogService
 
         return null;
     }
+
 
     public List<SupplyLog> getSupplyLogsByHospitalMail(String hospitalMail) {
         return supplyLogRepository.findByHospitalMail(hospitalMail);

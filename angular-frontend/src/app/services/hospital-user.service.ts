@@ -38,6 +38,7 @@ export interface SupplyLog
   dateOfDelivery: string;
   status: string;
   managedBy: string;
+  urgent:boolean;
 }
 
 @Injectable({

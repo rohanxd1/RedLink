@@ -27,7 +27,7 @@
   </nav>
 </div>
 
-<!-- Only show content area if logged in -->
+
 <div class="content-area" *ngIf="adminEmail">
   <app-donors *ngIf="currentView === 'donors'"></app-donors>
   <app-hospital *ngIf="currentView === 'hospitals'"></app-hospital>
@@ -36,7 +36,6 @@
   <app-urgentlogs *ngIf="currentView === 'urgentlogs'"></app-urgentlogs>
 </div>
 
-<!-- Optional: Show a message or redirect if NOT logged in -->
 <div *ngIf="!adminEmail" style="color: red; margin: 20px; font-weight: bold;">
   You are not logged in. Please log in to access.
 </div>

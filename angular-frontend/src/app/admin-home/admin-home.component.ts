@@ -12,14 +12,14 @@ export class AdminHomeComponent
   constructor(private router: Router) {}
    currentView: 'inventory' | 'donors' | 'hospitals' | 'logs'|'urgentlogs' = 'inventory';
 
-  // Function to set the current view on navbar click
+  
   showView(view: 'inventory' | 'donors' | 'hospitals' | 'logs'|'urgentlogs') 
   {
     this.currentView = view;
   }
 
   adminEmail: string | null = null;
-// getting this from admin login
+
   ngOnInit(): void 
   {
     this.adminEmail = localStorage.getItem('adminEmail');

@@ -48,14 +48,13 @@
           />
         </td>
 
-        <!-- Read-only fields -->
+       
         <td [attr.data-tooltip]="log.dateOfRequest"><input type="text" [value]="log.dateOfRequest" disabled class="greyed-out"/></td>
         <td [attr.data-tooltip]="log.dateOfTransit"><input type="text" [value]="log.dateOfTransit" disabled class="greyed-out"/></td>
         <td [attr.data-tooltip]="log.dateOfDelivery"><input type="text" [value]="log.dateOfDelivery" disabled class="greyed-out" /></td>
         <td [attr.data-tooltip]="log.status"><input type="text" [value]="log.status" disabled class="greyed-out"/></td>
         <td [attr.data-tooltip]="log.managedBy"><input type="text" [value]="log.managedBy" disabled class="greyed-out"/></td>
 
-        <!-- Actions -->
         <td class="actions-cell">
           <button class="primary-btn"
             (click)="confirmChanges(i)"

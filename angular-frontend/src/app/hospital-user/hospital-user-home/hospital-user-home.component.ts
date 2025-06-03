@@ -12,7 +12,7 @@ export class HospitalUserHomeComponent
   constructor(private router: Router) {}
    currentView:  'request' | 'profile' | 'logs' = 'profile';
 
-  // Function to set the current view on navbar click
+  
   showView(view: 'request' | 'profile' | 'logs') 
   {
     this.currentView = view;

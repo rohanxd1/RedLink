@@ -24,9 +24,9 @@
   />
 
   <label>
-    <input type="checkbox" [(ngModel)]="urgent" name="urgent" />
-    Urgent
+  <input type="checkbox" [(ngModel)]="urgent" name="urgent"> Urgent
   </label>
+
 
   
   <button type="submit" [disabled]="!bloodForm.form.valid || (unitsRequired ?? 0) <= 0 " [class.greyed-out]="!bloodForm.form.valid || (unitsRequired ?? 0) <= 0 ">

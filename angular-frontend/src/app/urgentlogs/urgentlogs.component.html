@@ -5,83 +5,80 @@
     <div class="error-text">{{errorMessage}}</div>
   </div>
 
-    
-  <div class="anim">
+  <div *ngIf="logs.length > 0; else noLogs">
+    <div class="table-wrapper">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Log-Id</th>
+            <th>Hospital Mail</th>
+            <th>Blood Group</th>
+            <th>Units</th>
+            <th>Request Date</th>
+            <th>Transit Date</th>
+            <th>Delivery Date</th>
+            <th>Managed By</th>
+            <th>Status</th>
+            <th class="actions-header">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let log of logs">
+            <td [attr.data-tooltip]="log.logId">
+              <input [value]="log.logId" disabled class="greyed-out" />
+            </td>
+            <td [attr.data-tooltip]="log.hospitalMail">
+              <input [value]="log.hospitalMail" disabled class="greyed-out" />
+            </td>
+            <td [attr.data-tooltip]="log.bloodGroup">
+              <input [value]="log.bloodGroup" disabled class="greyed-out" />
+            </td>
+            <td [attr.data-tooltip]="log.unitsRequired">
+              <input [value]="log.unitsRequired" disabled class="greyed-out" />
+            </td>
+            <td [attr.data-tooltip]="log.dateOfRequest">
+              <input [value]="log.dateOfRequest" disabled class="greyed-out" />
+            </td>
+            <td [attr.data-tooltip]="log.dateOfTransit">
+              <input [value]="log.dateOfTransit" disabled class="greyed-out" />
+            </td>
+            <td [attr.data-tooltip]="log.dateOfDelivery">
+              <input [value]="log.dateOfDelivery" disabled class="greyed-out" />
+            </td>
+            <td [attr.data-tooltip]="log.managedBy">
+              <input [value]="log.managedBy" disabled class="greyed-out" />
+            </td>
 
-      <div *ngIf="logs.length > 0; else noLogs">
-        <div class="table-wrapper">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Log-Id</th>
-                <th>Hospital Mail</th>
-                <th>Blood Group</th>
-                <th>Units</th>
-                <th>Request Date</th>
-                <th>Transit Date</th>
-                <th>Delivery Date</th>
-                <th>Managed By</th>
-                <th>Status</th>
-                <th class="actions-header">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let log of logs">
-                <td [attr.data-tooltip]="log.logId">
-                  <input [value]="log.logId" disabled class="greyed-out" />
-                </td>
-                <td [attr.data-tooltip]="log.hospitalMail">
-                  <input [value]="log.hospitalMail" disabled class="greyed-out" />
-                </td>
-                <td [attr.data-tooltip]="log.bloodGroup">
-                  <input [value]="log.bloodGroup" disabled class="greyed-out" />
-                </td>
-                <td [attr.data-tooltip]="log.unitsRequired">
-                  <input [value]="log.unitsRequired" disabled class="greyed-out" />
-                </td>
-                <td [attr.data-tooltip]="log.dateOfRequest">
-                  <input [value]="log.dateOfRequest" disabled class="greyed-out" />
-                </td>
-                <td [attr.data-tooltip]="log.dateOfTransit">
-                  <input [value]="log.dateOfTransit" disabled class="greyed-out" />
-                </td>
-                <td [attr.data-tooltip]="log.dateOfDelivery">
-                  <input [value]="log.dateOfDelivery" disabled class="greyed-out" />
-                </td>
-                <td [attr.data-tooltip]="log.managedBy">
-                  <input [value]="log.managedBy" disabled class="greyed-out" />
-                </td>
+            <td>
+              <select 
+                 [disabled]="originalStatus[log.logId] === 'DELIVERED'"
+                  [(ngModel)]="editedStatus[log.logId]"
+                  (change)="onStatusChange(log.logId, editedStatus[log.logId])"
+                >
+                  <option value="UNCONFIRMED">UNCONFIRMED</option>
+                  <option value="IN-TRANSIT">IN-TRANSIT</option>
+                  <option value="DELIVERED">DELIVERED</option>
+              </select>
+            </td>
 
-                <td>
-                  <select 
-                    [disabled]="originalStatus[log.logId] === 'DELIVERED'"
-                      [(ngModel)]="editedStatus[log.logId]"
-                      (change)="onStatusChange(log.logId, editedStatus[log.logId])"
-                    >
-                      <option value="UNCONFIRMED">UNCONFIRMED</option>
-                      <option value="IN-TRANSIT">IN-TRANSIT</option>
-                      <option value="DELIVERED">DELIVERED</option>
-                  </select>
-                </td>
-
-                <td class="actions-cell">
-                  <button class="primary-btn"
-                    (click)="onConfirm(log)"
-                    [disabled]="editedStatus[log.logId] === originalStatus[log.logId]">
-                    Confirm
-                  </button>
-                  <button class="secondary-btn"
-                    (click)="onCancel(log.logId)"
-                    [disabled]="!canCancel(log.logId)">
-                    Cancel
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+            <td class="actions-cell">
+              <button class="primary-btn"
+                (click)="onConfirm(log)"
+                [disabled]="editedStatus[log.logId] === originalStatus[log.logId]">
+                Confirm
+              </button>
+              <button class="secondary-btn"
+                (click)="onCancel(log.logId)"
+                [disabled]="!canCancel(log.logId)">
+                Cancel
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+
   <ng-template #noLogs>
     <div class="no-data">No Logs found.</div>
   </ng-template>

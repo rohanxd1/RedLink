@@ -38,8 +38,7 @@ export class HospitalLogsComponent implements OnInit {
           });
           this.editableLogs = this.logs.map(log => ({ ...log }));
           this.errorMessage = null;
-          this.showSuccessMessage = true;
-          setTimeout(() => this.showSuccessMessage = false, 3000);
+          
         },
         error: (err) => {
           this.logs = [];

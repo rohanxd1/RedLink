@@ -194,6 +194,25 @@
   background-color: #8e0000;
 }
 
+.submit-button
+{
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 2;
+  transition: background-color 0.3s;
+
+}
+
+.submit-button:hover 
+{
+  background-color: #b71c1c;
+}
+
 .save-button
 {
   position: absolute;

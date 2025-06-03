@@ -3,7 +3,6 @@ package com.Rohan.RedLink.service;
 import com.Rohan.RedLink.dto.HospitalDto;
 import com.Rohan.RedLink.dto.HospitalLoginRequest;
 import com.Rohan.RedLink.entity.Hospital;
-import com.Rohan.RedLink.entity.SupplyLog;
 import com.Rohan.RedLink.mappers.HospitalMapper;
 import com.Rohan.RedLink.repository.HospitalRepository;
 import lombok.AllArgsConstructor;

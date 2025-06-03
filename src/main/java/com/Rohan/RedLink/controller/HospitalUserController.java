@@ -1,9 +1,7 @@
 package com.Rohan.RedLink.controller;
 
-import com.Rohan.RedLink.dto.AdminLoginRequest;
 import com.Rohan.RedLink.dto.HospitalDto;
 import com.Rohan.RedLink.dto.HospitalLoginRequest;
-import com.Rohan.RedLink.entity.Admin;
 import com.Rohan.RedLink.entity.Hospital;
 import com.Rohan.RedLink.mappers.HospitalMapper;
 import com.Rohan.RedLink.service.HospitalService;

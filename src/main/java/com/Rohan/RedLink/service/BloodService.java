@@ -1,9 +1,7 @@
 package com.Rohan.RedLink.service;
 
 
-import com.Rohan.RedLink.dto.HospitalDto;
 import com.Rohan.RedLink.entity.Blood;
-import com.Rohan.RedLink.entity.Hospital;
 import com.Rohan.RedLink.repository.BloodRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

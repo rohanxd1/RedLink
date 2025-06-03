@@ -2,13 +2,9 @@ package com.Rohan.RedLink.service;
 
 
 import com.Rohan.RedLink.dto.AdminLoginRequest;
-import com.Rohan.RedLink.dto.DonorDto;
 import com.Rohan.RedLink.entity.Admin;
-import com.Rohan.RedLink.entity.Donor;
 import com.Rohan.RedLink.repository.AdminRepository;
-import com.Rohan.RedLink.repository.BloodRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

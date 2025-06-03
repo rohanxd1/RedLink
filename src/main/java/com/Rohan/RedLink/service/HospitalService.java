@@ -82,11 +82,40 @@ public class HospitalService
         return hospital;
     }
 
-    public HospitalDto viewProfile(String mail)
+    public Hospital viewProfile(String mail)
     {
         Hospital hospital=hospitalRepository.findByHospitalMail(mail)
                 .orElse(null);
-        return hospitalMapper.toDto(hospital);
+        return hospital;
     }
 
+    public Hospital changePassword(String mail,String newPassword)
+    {
+        Hospital hospital=hospitalRepository.findByHospitalMail(mail)
+                .orElse(null);
+        if (hospital!=null)
+        {
+            hospital.setHospitalPassword(newPassword);
+            hospitalRepository.save(hospital);
+        }
+        return hospital;
+    }
+
+    public Hospital updateProfile(long id,Hospital updatedHospital)
+    {
+        Hospital existingHospital= hospitalRepository.findById(id)
+                .orElse(null);
+        if (existingHospital!=null)
+        {
+            existingHospital.setHospitalName(updatedHospital.getHospitalName());
+            existingHospital.setHospitalCoordinator(updatedHospital.getHospitalCoordinator());
+            existingHospital.setHospitalPh(updatedHospital.getHospitalPh());
+            existingHospital.setHospitalMail(updatedHospital.getHospitalMail());
+            existingHospital.setHospitalAddress(updatedHospital.getHospitalAddress());
+
+            Hospital updated=hospitalRepository.save(existingHospital);
+            return updated;
+        }
+        return null;
+    }
 }

@@ -54,12 +54,34 @@ public class HospitalUserController
     @GetMapping("/profile")
     public ResponseEntity<?> viewProfile(@RequestParam String mail)
     {
-        HospitalDto profile = hospitalService.viewProfile(mail);
+        Hospital profile = hospitalService.viewProfile(mail);
         if (profile == null) {
             String message = "Error: User not found";
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
         }
         return ResponseEntity.ok(profile);
+    }
+
+    @PutMapping("/updateprofile/{id}")
+    public ResponseEntity<?> updateProfile(@PathVariable long id,@RequestBody Hospital updatedHospital)
+    {
+        Hospital hospital=hospitalService.updateProfile(id,updatedHospital);
+        if (hospital==null)
+        {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hospital with id:"+id+" not found!! \nFailed to update hospital.");
+        }
+        return  ResponseEntity.ok(hospital);
+    }
+
+    @PutMapping("/changepassword")
+    public ResponseEntity<?> changePassword(@RequestParam String mail,@RequestParam String newPassword )
+    {
+        Hospital hospital=hospitalService.changePassword(mail, newPassword);
+        if (hospital!=null)
+        {
+            return ResponseEntity.ok(hospital);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
 

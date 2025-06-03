@@ -58,6 +58,10 @@ export class HospitalUserService {
       return this.http.post<HospitalDto>(`http://localhost:8080/hospitaluser/login`, loginRequest, {withCredentials: true});
     }
 
+    updateProfile(id: number, updatedHospital: HospitalEntity): Observable<HospitalEntity> 
+    {
+      return this.http.put<HospitalEntity>(`http://localhost:8080/hospitaluser/updateprofile/${id}`, updatedHospital);
+    }
 
 
     createSupplyLog(supplyLog: SupplyLog): Observable<SupplyLog> 
@@ -79,10 +83,15 @@ export class HospitalUserService {
       return this.http.put<SupplyLog>('http://localhost:8080/supplylogs/updatehospitallog',log,{ withCredentials: true });
     }
 
-    viewProfile(mail:string):Observable<HospitalDto>
+    viewProfile(mail:string):Observable<HospitalEntity>
     {
-      return this.http.get<HospitalDto>(`http://localhost:8080/hospitaluser/profile`,{ params: {mail} ,withCredentials: true });
+      return this.http.get<HospitalEntity>(`http://localhost:8080/hospitaluser/profile`,{ params: {mail} ,withCredentials: true });
     }
 
+    changePassword(mail: string, newPassword: string): Observable<HospitalEntity> 
+    {
+    return this.http.put<HospitalEntity>(
+      `http://localhost:8080/hospitaluser/changepassword?mail=${encodeURIComponent(mail)}&newPassword=${encodeURIComponent(newPassword)}`, null);
+    }
     
 }

@@ -3,7 +3,7 @@
     <!-- view hospitals -->
 
   <ng-container *ngIf="currentView === 'list'">
-    <div class="button-group-container">
+    <div class="button-group-container" style="margin-top: 8px;">
       <button class="primary-btn" (click)="openOverlay()">Insert New Hospital</button>
       <button class="primary-btn" (click)="editHospital()">Edit</button>
       <button class="primary-btn" (click)="searchButton()">Search</button>
@@ -111,7 +111,7 @@
     <!-- overlay for edit hospital -->
       <ng-container *ngIf="currentView === 'edit'">
 
-        <div style="margin-bottom: 20px;margin-top: -30px;">
+        <div class="button-group-container" style="margin-top: 8px;">
         <button  class="primary-btn" (click)="backToList()">Go back</button>
         </div>
         <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>

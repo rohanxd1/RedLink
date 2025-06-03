@@ -120,8 +120,8 @@
         <ng-container *ngIf="currentView === 'edit'">
 
           <!-- allignment sheri aakan...make css class later -->
-          <div style="margin-bottom: 20px;margin-top: -30px;">
-              <button  class="edit-btn" (click)="backToList()">Go back</button>
+          <div class="buttons-container" style="margin-top: 7px;">
+              <button  class="edit-btn" (click)="backToList()" >Go back</button>
           </div>
 
           <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>

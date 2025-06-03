@@ -165,14 +165,17 @@ table td:nth-child(6) {
   text-align: start;
   
 }
-table td:nth-child(7),
-table td:nth-child(8) {
-  /* text-align: left; */
-  text-align: start;
+
+table td:nth-child(7)
+{
+   text-align: start;
   min-width: 20px;
   max-width: 20px;
   
 }
+
+
+
 
 
 

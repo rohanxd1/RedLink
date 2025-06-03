@@ -1,11 +1,91 @@
 <div class="section-container" *ngIf="profile">
+  <button class="edit-button" (click)="toggleEdit()">
+    {{ isEditMode ? 'Cancel' : 'Edit' }}
+  </button>
+
+  <button *ngIf="isEditMode" class="change-password-button" (click)="openPasswordOverlay()">
+    Change Password
+  </button>
+
   <div class="profile-card animate-fade-in">
     <h2>{{ profile.hospitalName }}</h2>
-    <p><strong>ID:</strong> {{ profile.hospitalId }}</p>
-    <p><strong>Coordinator:</strong> {{ profile.hospitalCoordinator }}</p>
-    <p><strong>Phone:</strong> {{ profile.hospitalPh }}</p>
-    <p><strong>Email:</strong> {{ profile.hospitalMail }}</p>
-    <p><strong>Address:</strong> {{ profile.hospitalAddress }}</p>
+
+    <div class="profile-details-grid">
+      <div class="profile-row">
+        <div class="label">Coordinator:</div>
+        <div class="value">
+          <ng-container *ngIf="!isEditMode; else editCoordinator">
+            <div class="value-box">{{ profile.hospitalCoordinator }}</div>
+          </ng-container>
+          <ng-template #editCoordinator>
+            <input [(ngModel)]="editableProfile.hospitalCoordinator" class="value-box" />
+          </ng-template>
+        </div>
+      </div>
+
+      <div class="profile-row">
+        <div class="label">Phone:</div>
+        <div class="value">
+          <ng-container *ngIf="!isEditMode; else editPhone">
+            <div class="value-box">{{ profile.hospitalPh }}</div>
+          </ng-container>
+          <ng-template #editPhone>
+            <input [(ngModel)]="editableProfile.hospitalPh" class="value-box" />
+          </ng-template>
+        </div>
+      </div>
+
+      <div class="profile-row">
+        <div class="label">Email:</div>
+        <div class="value">
+          <ng-container *ngIf="!isEditMode; else editEmail">
+            <div class="value-box">{{ profile.hospitalMail }}</div>
+          </ng-container>
+          <ng-template #editEmail>
+            <input [(ngModel)]="editableProfile.hospitalMail" class="value-box" />
+          </ng-template>
+        </div>
+      </div>
+
+      <div class="profile-row">
+        <div class="label">Address:</div>
+        <div class="value">
+          <ng-container *ngIf="!isEditMode; else editAddress">
+            <div class="value-box">{{ profile.hospitalAddress }}</div>
+          </ng-container>
+          <ng-template #editAddress>
+            <input [(ngModel)]="editableProfile.hospitalAddress" class="value-box" />
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isEditMode" style="margin-top: 20px; text-align: right;">
+      <button (click)="saveProfile()" class="save-button">
+        Save
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="showSuccessMessage" class="success-overlay-message">
+    Profile updated successfully!
+  </div>
+</div>
+
+<div *ngIf="showPasswordOverlay" class="overlay">
+  <div class="password-card">
+    <h3>Change Password</h3>
+    <input [(ngModel)]="oldPassword" type="password" placeholder="Old Password" class="value-box" />
+    <input [(ngModel)]="newPassword" type="password" placeholder="New Password" class="value-box" />
+    <input [(ngModel)]="confirmPassword" type="password" placeholder="Confirm Password" class="value-box" />
+    <div class="overlay-buttons">
+      <button class="save-button" (click)="changePassword()">Submit</button>
+      <button class="cancel-button" (click)="closePasswordOverlay()">Cancel</button>
+    </div>
+
+    <div class="error-message" *ngIf="passwordError">{{ passwordError }}</div>
+    
+    
   </div>
 </div>
 

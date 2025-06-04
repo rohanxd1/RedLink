@@ -30,13 +30,14 @@ export class HospitalUserHomeComponent
 
   hovering = false;
   
+  dropdownOpen = false;
 
 
-
-  logout(): void 
+  logout(): void
   {
-      localStorage.removeItem('hospitalEmail');
-      this.hospitalEmail = null; 
-      this.router.navigate(['/hospitaluserlogin']);
+    this.dropdownOpen = false;  // close dropdown on logout
+    localStorage.removeItem('hospitalEmail');
+    this.hospitalEmail = null;
+    this.router.navigate(['/hospitaluserlogin']);
   }
 }

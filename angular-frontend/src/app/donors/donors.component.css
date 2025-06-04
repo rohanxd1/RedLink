@@ -82,11 +82,17 @@
   text-align: center;
 }
 
-.donor-table th, .donor-table td {
-  padding: 14px 18px;
-  text-align: left;
-  border-bottom: 1px solid #f2cccc;
-}
+.donor-table th,
+  .donor-table td {
+    border: 1px solid #ccc;
+    padding: 8px 15px;
+    text-align: left;
+    position: relative;
+    vertical-align: middle;
+    /* max-width: 120px; */
+    word-wrap: break-word;
+    word-break: break-word;
+  }
 
 /* Center buttons container cells, keep padding consistent */
 .donor-table td.actions-cell {
@@ -105,40 +111,65 @@ table th {
 }
 /* table overflow control thingys */
 
-table td:nth-child(1) {
-  width: 60px; /* ID */
+.donor-table td:nth-child(1) {
+  /* width: 10px; ID */
+  max-width: 1px;
+  text-align: center;
+}
+.donor-table th:nth-child(1) {
+  text-align: center;
+  justify-content: center;
+  max-width: 1px;
+  text-align: center;
+  align-items: center;
 }
 
-table td:nth-child(2) {
+table td:nth-child(2) 
+{
   width: 200px; /* Name */
+  white-space: normal;
+  text-align: left;
+  align-items: center;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.donor-table th:nth-child(2) 
+{
+ text-align: center;
 }
 
 table td:nth-child(3) {
   width: 150px; /* Blood Group */
   text-align: center;
   size: fixed;
-  max-width: 150px;
+  max-width: 60px;
 
   
 }
-table th:nth-child(3) {
+.donor-table th:nth-child(3) {
   text-align: center;
   justify-content: center;
-  /* max-width: px; */
+  max-width: 10px;
+  word-wrap: break-word;
+  word-break: break-word;
   text-align: center;
   align-items: center;
   
 }
 
+.donor-table th:nth-child(4) {
+ text-align: center;
+}
 
-table td:nth-child(4) {
+.donor-table td:nth-child(4) {
   width: 130px; /* Phone */
+  text-align: center;
 }
 
 
 /* Adjusted table column styles to wrap text after 100 characters visually */
-table th:nth-child(5),
-table td:nth-child(5)
+table th:nth-child(5)
 {
   max-width: 200px;
   white-space: normal;
@@ -147,11 +178,25 @@ table td:nth-child(5)
   word-wrap: break-word;
   word-break: break-word;
 
-}  /* Email */
-table td:nth-child(6) { /* Address */
+}  
+table td:nth-child(5)
+{
+  max-width: 200px;
+  white-space: normal;
+  text-align: justify;
+  align-items: center;
+  word-wrap: break-word;
+  word-break: break-word;
+
+} 
+
+
+.donor-table td:nth-child(6) 
+{ /* Address */
   max-width: 300px;
   white-space: normal;
-  text-align: left;
+  text-align: justify;
+  align-items: center;
   word-wrap: break-word;
   word-break: break-word;
 }
@@ -175,11 +220,6 @@ table td:nth-child(7)
 }
 
 
-
-
-
-
-/* table overflow control thingys end*/
 
 
 
@@ -460,4 +500,35 @@ table td:nth-child(7)
 .overlay-content .button-group .edit-btn:hover {
   background-color: #ddd;
   border-color: #bbb;
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  gap: 10px;      
+}
+
+
+.search-input {
+  width: 300px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px 0 0 6px;
+  outline: none;
+}
+
+.search-button {
+  padding: 8px 16px;
+  border: none;
+  background-color: #b71c1c;
+  color: white;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-button:hover {
+  background-color: #a31414;
 }

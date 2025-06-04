@@ -10,6 +10,27 @@ export class HospitalComponent implements OnInit
 {
    constructor(private hospitalService: HospitalService) {}
    
+
+
+  // search
+    searchQuery: string = '';
+    filteredHospitals: HospitalDto[] = [];
+  
+    filterHospitals(): void
+     {
+        const query = this.searchQuery.toLowerCase();
+  
+            this.filteredHospitals = this.hospitals.filter(h =>
+            h.hospitalName.toLowerCase().includes(query) ||
+            h.hospitalCoordinator.toLowerCase().includes(query) ||
+            h.hospitalPh.toLowerCase().includes(query) ||
+            h.hospitalMail.toLowerCase().includes(query) ||
+            h.hospitalAddress.toLowerCase().includes(query)
+          );
+     }
+     
+    // search end
+
    
   //  for view hosp thingies
    hospitals: HospitalDto[] = [];
@@ -28,7 +49,9 @@ export class HospitalComponent implements OnInit
   loadHospitals(): void 
   {
     this.hospitalService.getAllHospitals().subscribe(
-      data => this.hospitals = data,
+      data => {this.hospitals = data;
+               this.filteredHospitals = data;
+              },
       error => this.errorMessage = 'Failed to load hospitals.'
     );
   }
@@ -263,82 +286,4 @@ export class HospitalComponent implements OnInit
 
   // hosp edit mode parent overlay end
 
-  // Search mode
-    searchOverlay=false;
-    searchIdInput:number|null=null;
-    searchView=false;
-    searchError=false;
-    searchHospital:HospitalDto=
-    {
-               hospitalId:0,
-               hospitalName: '',
-               hospitalCoordinator:'',
-               hospitalPh: '',
-               hospitalMail: '',
-               hospitalAddress: ''
-    };
-    searchButton()
-    {
-      // search true aakanam
-      this.searchOverlay=true;
-    }
-    findHospital() 
-    {
-      this.searchError = false;
-       this.searchView = false;
-
-       // Reset result container
-       this.searchHospital = {
-       hospitalId: 0,
-       hospitalName: '',
-       hospitalCoordinator: '',
-       hospitalPh: '',
-       hospitalMail: '',
-       hospitalAddress: ''
-            };
-
-        // Validate input
-        if (this.searchIdInput === null || this.searchIdInput <= 0) 
-          {
-            this.searchError = true;
-            return; // stop further execution
-          }
-
-        // Call backend
-        this.hospitalService.findHospital(this.searchIdInput).subscribe
-          (
-            {
-              next: (data) => 
-              {
-                    this.searchView = true;
-                    this.searchError = false;
-                    this.searchHospital = data;
-              },
-              error: (error) => 
-              {
-                // Handle 404 or any error
-                 this.searchView = false;
-                 this.searchError = true;
-                 console.error("Error fetching hospital: ", error);
-              }
-            });
-    }
-
-    closeSearchOverlay()
-    {       this.searchError = false;
-            this.searchOverlay=false;
-            this.searchView=false;
-            this.searchIdInput = null;
-            this.searchHospital=
-            {
-               hospitalId:0,
-               hospitalName: '',
-               hospitalCoordinator:'',
-               hospitalPh: '',
-               hospitalMail: '',
-               hospitalAddress: ''
-            };
-             this.backToList();
-    }
-  // Search mode end
 }

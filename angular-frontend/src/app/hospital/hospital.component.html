@@ -4,9 +4,19 @@
 
   <ng-container *ngIf="currentView === 'list'">
     <div class="button-group-container" style="margin-top: 8px;">
+       <div class="search-container">
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Search hospitals..."
+            [(ngModel)]="searchQuery"
+            (input)="filterHospitals()"
+          />
+          <button class="search-button" (click)="filterHospitals()">Search</button>
+        </div>
       <button class="primary-btn" (click)="openOverlay()">Insert New Hospital</button>
       <button class="primary-btn" (click)="editHospital()">Edit</button>
-      <button class="primary-btn" (click)="searchButton()">Search</button>
+      
     </div>
 
     <div *ngIf="errorMessage" class="error-box" (click)="clearError()">
@@ -15,11 +25,11 @@
     </div>
 
     <div class="anim">
-    <div *ngIf="hospitals.length > 0; else noHospitals">
+    <div *ngIf="filteredHospitals.length > 0; else noHospitals">
       <table class="data-table">
         <thead>
           <tr>
-            <th>Hospital ID</th>
+            <th>ID</th>
             <th>Hospital Name</th>
             <th>Hospital Coordinator</th>
             <th>Phone</th>
@@ -28,7 +38,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let hospital of hospitals">
+          <tr *ngFor="let hospital of filteredHospitals">
             <td>{{hospital.hospitalId}}</td>
             <td>{{hospital.hospitalName}}</td>
             <td>{{hospital.hospitalCoordinator}}</td>
@@ -186,7 +196,7 @@
                 <br />
                 <label>
                    Address:
-                  <input type="text" [(ngModel)]="selectedHospital.hospitalAddress" name="ospitalAddress" required />
+                  <input type="text" [(ngModel)]="selectedHospital.hospitalAddress" name="hospitalAddress" required />
                 </label>
                <br /><br />
                <div class="button-group-container">
@@ -251,42 +261,5 @@
       </ng-container>
     <!-- overlay for edit  hospital end-->
 
-        <!-- search overlay -->
-    <div *ngIf="searchOverlay" class="overlay">
-      <div class="overlay-content">
-          <h3>Search view</h3>
-          <form (ngSubmit)="findHospital()">
-            <input type="number" [(ngModel)]="searchIdInput" name="searchId" placeholder="Enter id to search" required min="1">
-            
-            <!-- if search done -->
-              <div *ngIf="searchView">
-
-            <table style="width:100%; margin-bottom: 20px;">
-                   <tr><td><strong>Id:</strong></td><td>{{searchHospital.hospitalId }}</td></tr>
-                   <tr><td><strong>Hospital Name:</strong></td><td>{{searchHospital.hospitalName }}</td></tr>
-                   <tr><td><strong>Coordinator:</strong></td><td>{{searchHospital.hospitalCoordinator }}</td></tr>
-                   <tr><td><strong>Phone:</strong></td><td>{{searchHospital.hospitalPh }}</td></tr>
-                   <tr><td><strong>Email:</strong></td><td>{{searchHospital.hospitalMail }}</td></tr>
-                   <tr><td><strong>Address:</strong></td><td>{{searchHospital.hospitalAddress }}</td></tr>
-             </table>
-
-            </div>
-            <!--  -->
-            <!-- search error -->
-            <div *ngIf="searchError" class="error-text" style="margin-top: 10px;">No record found</div>
-            <!-- search error  ednd-->
-            
-            <div class="button-group-container" style="margin-top: 40px;">
-              <div class="button-group">
-                <button type="submit" class="primary-btn">Search</button>
-                 <button class="secondary-btn" (click)="closeSearchOverlay()">Back</button>
-              </div>
-            </div>
-            
-          </form>
-          
-      </div>
-    </div>
-    <!-- search overlay -->
     
 </div>

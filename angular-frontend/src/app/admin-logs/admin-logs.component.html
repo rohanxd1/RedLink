@@ -5,7 +5,28 @@
     <div class="error-text">{{errorMessage}}</div>
   </div>
 
-  <div *ngIf="logs.length > 0; else noLogs">
+  <!-- search -->
+   <div class="top-bar">
+      <div class="search-container">
+        <input class="search-input" type="text" [(ngModel)]="searchQuery" (input)="filterLogs()" placeholder="Search by Hospital Email or Blood Group">
+        <button class="search-button" (click)="filterLogs()">Search</button>
+      </div>
+
+      <div class="status-toggle-group">
+        <button
+          class="toggle-btn"
+          *ngFor="let status of toggleStatuses"
+          [class.active-toggle]="selectedToggle === status"
+          (click)="onToggleStatus(status)">
+          {{ status }}
+        </button>
+      </div>
+    </div>
+
+
+
+
+  <div *ngIf="filteredLogs.length > 0; else noLogs">
     <div class="table-wrapper">
       <table class="data-table">
         <thead>
@@ -23,7 +44,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let log of logs">
+          <tr *ngFor="let log of filteredLogs">
+
             <td [attr.data-tooltip]="log.logId">
               <input [value]="log.logId" disabled class="greyed-out" />
             </td>

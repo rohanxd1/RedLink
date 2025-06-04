@@ -5,10 +5,25 @@
 
 
       <div class="buttons-container" style="margin-top: 8px;">
+
+        <div class="search-container">
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Search donors..."
+            [(ngModel)]="searchQuery"
+            (input)="filterDonors()"
+          />
+          <button class="search-button" (click)="filterDonors()">Search</button>
+        </div>
+
         <button class="insert-btn" (click)="openOverlay()">Insert New Donor</button>
         <button class="edit-btn" (click)="editDonor()">Edit</button>
-        <button class="insert-btn" (click)="searchButton()">Search</button>
+        <!-- <button class="insert-btn" (click)="searchButton()">Search</button> -->
+        
       </div>
+
+      
 
       <!-- Error Message -->
       <div *ngIf="errorMessage" class="error" (click)="clearError()">
@@ -21,7 +36,7 @@
   <div class="anim">
 
       <!-- Donor Table -->
-      <div *ngIf="donors.length > 0; else noDonors">
+      <div *ngIf="filteredDonors.length > 0; else noDonors">
         <table class="donor-table">
           <thead>
             <tr>
@@ -34,7 +49,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let donor of donors">
+            <tr *ngFor="let donor of filteredDonors">
+
               <td>{{ donor.donorId }}</td>
               <td>{{ donor.donorName }}</td>
               <td >{{ donor.donorGroup }}</td>
@@ -256,40 +272,7 @@
     <!-- Edit view end -->
   
 
-      <!-- search overlay -->
-      <div *ngIf="searchOverlay" class="overlay">
-        <div class="overlay-content">
-            <h3>Search view</h3>
-            <form (ngSubmit)="findDonor()">
-              <input type="number" [(ngModel)]="searchIdInput" name="searchId" placeholder="Enter id to search" required>
-              
-              <!-- if search done -->
-                <div *ngIf="searchView">
-
-              <table style="width:100%; margin-bottom: 20px;">
-                    <tr><td><strong>ID:</strong></td><td>{{ searchDonor.donorId }}</td></tr>
-                    <tr><td><strong>Name:</strong></td><td>{{ searchDonor.donorName }}</td></tr>
-                    <tr><td><strong>Blood Group:</strong></td><td>{{ searchDonor.donorGroup }}</td></tr>
-                    <tr><td><strong>Phone:</strong></td><td>{{ searchDonor.donorPh }}</td></tr>
-                    <tr><td><strong>Email:</strong></td><td>{{ searchDonor.donorMail }}</td></tr>
-                    <tr><td><strong>Address:</strong></td><td>{{ searchDonor.donorAddress }}</td></tr>
-              </table>
-
-              </div>
-              <!--  -->
-              <!-- search error -->
-              <div *ngIf="searchError" class="error-text">No record found</div>
-              <!-- search error  ednd-->
-
-              <div class="button-group">
-              <button type="submit" class="insert-btn">Search</button>
-              <button class="edit-btn" (click)="closeSearchOverlay()">Back</button>
-              </div>
-            </form>
-            
-        </div>
-      </div>
-      <!-- search overlay -->
+      
   
 
 

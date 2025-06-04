@@ -23,19 +23,40 @@ export class DonorsComponent implements OnInit
 
   constructor(private donorService: DonorService) {}
 
+  // search
+  searchQuery: string = '';
+  filteredDonors: DonorDto[] = [];
+
+  filterDonors(): void
+   {
+      const query = this.searchQuery.toLowerCase();
+
+      this.filteredDonors = this.donors.filter(d =>
+          d.donorName.toLowerCase().includes(query) ||
+          d.donorGroup.toLowerCase().includes(query) ||
+          d.donorPh.toLowerCase().includes(query) ||
+          d.donorMail.toLowerCase().includes(query) ||
+          d.donorAddress.toLowerCase().includes(query)
+        );
+   }
+
+  // search end
   ngOnInit(): void 
   {
     this.loadDonors();
   }
-
   // fn to load dto list from rest req to serv to here 
-  loadDonors(): void 
-  {
-    this.donorService.getAllDonors().subscribe(
-      data => this.donors = data,
-      error => this.errorMessage = 'Failed to load donors.'
-    );
-  }
+  loadDonors(): void
+   {
+      this.donorService.getAllDonors().subscribe(
+        data => {
+          this.donors = data;
+          this.filteredDonors = data; // initialize filtered view
+        },
+        error => this.errorMessage = 'Failed to load donors.'
+      );
+    }
+
  
   
   
@@ -277,82 +298,6 @@ export class DonorsComponent implements OnInit
 
     // Update DOnor stuff end
     
-    // Search Donor studd
-          searchView=false;
-          searchOverlay=false;
-          searchError=false;
-          searchIdInput: number | null = null;  // Add this line at the top
-
-          searchDonor: DonorDto=
-          {
-                         donorId: -1,
-                         donorName: '',
-                         donorGroup: '',
-                         donorPh: '',
-                         donorMail: '',
-                         donorAddress: ''
-          };
-          searchButton(): void
-          { 
-            this.searchOverlay=true;
-          }
-
-          
-
-          findDonor() 
-          { this.searchError = false;
-            this.searchDonor=
-            {
-                         donorId: 0,
-                         donorName: '',
-                         donorGroup: '',
-                         donorPh: '',
-                         donorMail: '',
-                         donorAddress: ''
-            };
-            this.searchView = false;
-            if (this.searchIdInput != null && this.searchIdInput > 0) 
-              {
-               this.donorService.findDonor(this.searchIdInput).subscribe
-               (
-                {
-                  next: (data) => 
-                    {
-                      this.searchView = true;
-                      this.searchDonor = data;
-                    },
-                  error: (data) => 
-                    {
-                      this.searchError = true;
-                      console.error(data);
-                    }
-                }
-               );
-              } 
-              else 
-              {
-                 console.error("Donor id is invalid");
-              }
-          }
-
-          closeSearchOverlay():void
-          {
-            this.searchOverlay=false;
-            this.searchView=false;
-            this.searchIdInput = null;
-            this.searchDonor=
-          {
-                         donorId: 0,
-                         donorName: '',
-                         donorGroup: '',
-                         donorPh: '',
-                         donorMail: '',
-                         donorAddress: ''
-          };
-            this.backToList();
-
-          }
-    // Search Donor studd
   
 
 }

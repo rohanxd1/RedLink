@@ -6,19 +6,23 @@
 
     <div class="header" style="margin-left: 145px;">Hospital Home</div>
 
-    <div class="button-container">
-      <button class="log-out-btn"
-              (mouseenter)="hovering = true"
-              (mouseleave)="hovering = false"
-              (click)="logout()">
-        {{ hovering ? 'Logout' : hospitalEmail }}
-      </button>
+        <div class="dropdown" >
+        <button class="log-out-btn" (click)="dropdownOpen = !dropdownOpen">
+          {{ hospitalEmail }}
+          <span class="arrow" [class.open]="dropdownOpen">▼</span>
+        </button>
+      
+        <div class="dropdown-menu" *ngIf="dropdownOpen">
+          <button class="dropdown-item" (click)="logout()">Logout</button>
+        </div>
     </div>
+
+    
   </div>
 
   <nav class="navbar">
     <ul>
-      <li><a href="#" (click)="showView('profile'); $event.preventDefault()" [class.active]="currentView === 'profile'">profile</a></li>
+      <li><a href="#" (click)="showView('profile'); $event.preventDefault()" [class.active]="currentView === 'profile'">Profile</a></li>
       <li><a href="#" (click)="showView('request'); $event.preventDefault()" [class.active]="currentView === 'request'">Request</a></li>
       <li><a href="#" (click)="showView('logs'); $event.preventDefault()" [class.active]="currentView === 'logs'">Logs</a></li>
     </ul>

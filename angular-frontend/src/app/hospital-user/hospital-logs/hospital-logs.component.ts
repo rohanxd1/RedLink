@@ -20,6 +20,38 @@ export class HospitalLogsComponent implements OnInit {
     this.errorMessage = null;
   }
 
+
+  // search
+    filteredLogs: SupplyLog[] = [];
+    searchQuery: string = '';
+    toggleStatuses: string[] = ['ALL', 'UNCONFIRMED', 'IN-TRANSIT', 'DELIVERED'];
+    selectedToggle: string = 'ALL';
+  
+    filterLogs(): void
+    {
+      const query = this.searchQuery.trim().toLowerCase();
+  
+      this.filteredLogs = this.logs.filter(log =>
+      {
+        const matchesSearch =
+          log.hospitalMail.toLowerCase().includes(query) ||
+          log.bloodGroup.toLowerCase().includes(query);
+  
+        const matchesStatus =
+          this.selectedToggle === 'ALL' || log.status === this.selectedToggle;
+  
+        return matchesSearch && matchesStatus;
+      });
+    }
+  
+    onToggleStatus(status: string): void
+    {
+      this.selectedToggle = status;
+      this.filterLogs();
+    }
+  
+    // search end
+
   constructor(private hospitaluserservice: HospitalUserService) {}
 
   ngOnInit(): void {
@@ -38,7 +70,7 @@ export class HospitalLogsComponent implements OnInit {
           });
           this.editableLogs = this.logs.map(log => ({ ...log }));
           this.errorMessage = null;
-          
+          this.filteredLogs = [...this.logs];
         },
         error: (err) => {
           this.logs = [];

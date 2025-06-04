@@ -1,11 +1,31 @@
 <div class="section-container">
 
+  <!-- Error Box -->
   <div *ngIf="errorMessage" class="error-box" (click)="clearError()">
     <div class="close-hint">click to close</div>
-    <div class="error-text">{{errorMessage}}</div>
+    <div class="error-text">{{ errorMessage }}</div>
   </div>
 
-  <div *ngIf="logs.length > 0; else noLogs">
+  <!-- Controls -->
+ <div class="top-bar">
+      <div class="search-container">
+        <input class="search-input" type="text" [(ngModel)]="searchQuery" (input)="filterLogs()" placeholder="Search by Hospital Email or Blood Group">
+        <button class="search-button" (click)="filterLogs()">Search</button>
+      </div>
+
+      <div class="status-toggle-group">
+        <button
+          class="toggle-btn"
+          *ngFor="let status of toggleStatuses"
+          [class.active-toggle]="selectedToggle === status"
+          (click)="onToggleStatus(status)">
+          {{ status }}
+        </button>
+      </div>
+    </div>
+
+  <!-- Logs Table -->
+  <div *ngIf="filteredLogs.length > 0; else noLogs">
     <div class="table-wrapper">
       <table class="data-table">
         <thead>
@@ -23,7 +43,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let log of logs">
+          <tr *ngFor="let log of filteredLogs">
             <td [attr.data-tooltip]="log.logId">
               <input [value]="log.logId" disabled class="greyed-out" />
             </td>
@@ -48,28 +68,30 @@
             <td [attr.data-tooltip]="log.managedBy">
               <input [value]="log.managedBy" disabled class="greyed-out" />
             </td>
-
             <td>
               <select 
-                 [disabled]="originalStatus[log.logId] === 'DELIVERED'"
-                  [(ngModel)]="editedStatus[log.logId]"
-                  (change)="onStatusChange(log.logId, editedStatus[log.logId])"
-                >
-                  <option value="UNCONFIRMED">UNCONFIRMED</option>
-                  <option value="IN-TRANSIT">IN-TRANSIT</option>
-                  <option value="DELIVERED">DELIVERED</option>
+                [disabled]="originalStatus[log.logId] === 'DELIVERED'"
+                [(ngModel)]="editedStatus[log.logId]"
+                (change)="onStatusChange(log.logId, editedStatus[log.logId])"
+              >
+                <option value="UNCONFIRMED">UNCONFIRMED</option>
+                <option value="IN-TRANSIT">IN-TRANSIT</option>
+                <option value="DELIVERED">DELIVERED</option>
               </select>
             </td>
-
             <td class="actions-cell">
-              <button class="primary-btn"
+              <button
+                class="primary-btn"
                 (click)="onConfirm(log)"
-                [disabled]="editedStatus[log.logId] === originalStatus[log.logId]">
+                [disabled]="editedStatus[log.logId] === originalStatus[log.logId]"
+              >
                 Confirm
               </button>
-              <button class="secondary-btn"
+              <button
+                class="secondary-btn"
                 (click)="onCancel(log.logId)"
-                [disabled]="!canCancel(log.logId)">
+                [disabled]="!canCancel(log.logId)"
+              >
                 Cancel
               </button>
             </td>
@@ -79,10 +101,12 @@
     </div>
   </div>
 
+  <!-- No Logs -->
   <ng-template #noLogs>
     <div class="no-data">No Logs found.</div>
   </ng-template>
 
+  <!-- Success Message -->
   <div *ngIf="showSuccessMessage" class="success-overlay-message">
     Log updated successfully!
   </div>

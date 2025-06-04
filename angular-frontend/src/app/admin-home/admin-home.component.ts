@@ -29,16 +29,18 @@ export class AdminHomeComponent
   }
 
   hovering = false;
-  
+  dropdownOpen = false;
 
 
 
-  logout(): void 
+
+
+  logout(): void
   {
-      localStorage.removeItem('adminEmail');
-      this.adminEmail = null; 
-      this.router.navigate(['/adminlogin']);
+    this.dropdownOpen = false;  // close dropdown on logout
+    localStorage.removeItem('adminEmail');
+    this.adminEmail = null;
+    this.router.navigate(['/adminlogin']);
   }
-
 
 }

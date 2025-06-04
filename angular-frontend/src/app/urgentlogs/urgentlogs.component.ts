@@ -18,6 +18,37 @@ export class UrgentlogsComponent implements OnInit
     showSuccessMessage = false; 
     errorMessage: string | null = null; 
  
+    // search
+    filteredLogs: SupplyLog[] = [];
+    searchQuery: string = '';
+    toggleStatuses: string[] = ['ALL', 'UNCONFIRMED', 'IN-TRANSIT', 'DELIVERED'];
+    selectedToggle: string = 'ALL';
+
+    filterLogs(): void
+  {
+    const query = this.searchQuery.trim().toLowerCase();
+
+    this.filteredLogs = this.logs.filter(log =>
+    {
+      const matchesSearch =
+        log.hospitalMail.toLowerCase().includes(query) ||
+        log.bloodGroup.toLowerCase().includes(query);
+
+      const matchesStatus =
+        this.selectedToggle === 'ALL' || log.status === this.selectedToggle;
+
+      return matchesSearch && matchesStatus;
+    });
+  }
+
+  onToggleStatus(status: string): void
+  {
+    this.selectedToggle = status;
+    this.filterLogs();
+  }
+
+    //search end
+
     private bloodApiBase = 'http://localhost:8080/admin/blood';
  
     constructor(private supplyLogService: AdminSupplyLogService, private http: HttpClient) {}
@@ -34,6 +65,7 @@ export class UrgentlogsComponent implements OnInit
                     {
                         const urgentLogs = data.filter(log => log.urgent === true);
                         this.logs = urgentLogs.sort((a, b) => b.logId - a.logId);
+                        this.filteredLogs = [...this.logs];
 
                         // Initialize status trackers
                         this.logs.forEach(log =>

@@ -8,170 +8,197 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './admin-logs.component.html',
   styleUrls: ['./admin-logs.component.css']
 })
-export class AdminLogsComponent implements OnInit 
+export class AdminLogsComponent implements OnInit
 {
+  logs: SupplyLog[] = [];
+  
+  originalStatus: { [logId: number]: string } = {};
+  editedStatus: { [logId: number]: string } = {};
+  showSuccessMessage = false;
+  errorMessage: string | null = null;
 
-  logs: SupplyLog[] = [];  
-  originalStatus: { [logId: number]: string } = {};  
-  editedStatus: { [logId: number]: string } = {};    
-  showSuccessMessage = false; 
-  errorMessage: string | null = null; 
+  // search
+  filteredLogs: SupplyLog[] = [];
+  searchQuery: string = '';
+  toggleStatuses: string[] = ['ALL', 'UNCONFIRMED', 'IN-TRANSIT', 'DELIVERED'];
+  selectedToggle: string = 'ALL';
+
+  filterLogs(): void
+  {
+    const query = this.searchQuery.trim().toLowerCase();
+
+    this.filteredLogs = this.logs.filter(log =>
+    {
+      const matchesSearch =
+        log.hospitalMail.toLowerCase().includes(query) ||
+        log.bloodGroup.toLowerCase().includes(query);
+
+      const matchesStatus =
+        this.selectedToggle === 'ALL' || log.status === this.selectedToggle;
+
+      return matchesSearch && matchesStatus;
+    });
+  }
+
+  onToggleStatus(status: string): void
+  {
+    this.selectedToggle = status;
+    this.filterLogs();
+  }
+
+  // search end
 
   private bloodApiBase = 'http://localhost:8080/admin/blood';
 
   constructor(private supplyLogService: AdminSupplyLogService, private http: HttpClient) {}
 
-  ngOnInit(): void 
+  ngOnInit(): void
   {
-    this.loadLogs(); 
+    this.loadLogs();
   }
 
-  
-  loadLogs(): void {
-    this.supplyLogService.getAllSupplyLogs().subscribe(
+  loadLogs(): void
+  {
+    this.supplyLogService.getAllSupplyLogs().subscribe({
+      next: data =>
       {
-        next: data => {
-          // Sort logs descending by logId (latest first)
-          this.logs = data.sort((a, b) => b.logId - a.logId);
-         
-          this.logs.forEach(log => 
-            {
-              this.originalStatus[log.logId] = log.status;
-              this.editedStatus[log.logId] = log.status;
-            });
-          this.errorMessage = null;
-        },
-        error: () => this.errorMessage = 'Failed to load logs.'
-      });
+        this.logs = data.sort((a, b) => b.logId - a.logId);
+        this.filteredLogs = [...this.logs];
+
+        this.logs.forEach(log =>
+        {
+          this.originalStatus[log.logId] = log.status;
+          this.editedStatus[log.logId] = log.status;
+        });
+
+        this.errorMessage = null;
+      },
+      error: () =>
+      {
+        this.errorMessage = 'Failed to load logs.';
+      }
+    });
   }
 
+
   
-   // If 'IN-TRANSIT' is selected, checks if enough blood units are available.
-   
-  async onStatusChange(logId: number, newStatus: string): Promise<void> 
-{
-  if (newStatus === 'IN-TRANSIT') 
+
+  async onStatusChange(logId: number, newStatus: string): Promise<void>
   {
-    const log = this.logs.find(l => l.logId === logId);
-    if (!log) return;
+    if (newStatus === 'IN-TRANSIT')
+    {
+      const log = this.logs.find(l => l.logId === logId);
+      if (!log) return;
 
-    try {
-      // Encode the blood group to handle special characters like '+'
-      const encodedBloodGroup = encodeURIComponent(log.bloodGroup);
-
-      
-      const blood = await this.http.get<{ availableUnits: number }>(
-        `${this.bloodApiBase}/check?group=${encodedBloodGroup}`
-      ).toPromise();
-
-      if (!blood || typeof blood.availableUnits !== 'number') 
+      try
       {
-        alert('Could not retrieve blood inventory.');
-        this.editedStatus[logId] = this.originalStatus[logId];
-        return;
-      }
+        const encodedBloodGroup = encodeURIComponent(log.bloodGroup);
 
-      if (blood.availableUnits < log.unitsRequired)
+        const blood = await this.http.get<{ availableUnits: number }>(
+          `${this.bloodApiBase}/check?group=${encodedBloodGroup}`
+        ).toPromise();
+
+        if (!blood || typeof blood.availableUnits !== 'number')
+        {
+          alert('Could not retrieve blood inventory.');
+          this.editedStatus[logId] = this.originalStatus[logId];
+          return;
+        }
+
+        if (blood.availableUnits < log.unitsRequired)
+        {
+          alert(`Insufficient units. Available = ${blood.availableUnits} units.`);
+          this.editedStatus[logId] = this.originalStatus[logId];
+          return;
+        }
+
+        this.editedStatus[logId] = newStatus;
+      }
+      catch (error)
       {
-        alert(`Insufficient units. Available = ${blood.availableUnits} units.`);
+        alert('Error checking blood inventory.');
         this.editedStatus[logId] = this.originalStatus[logId];
-        return;
       }
-
-      this.editedStatus[logId] = newStatus;
-
-    } catch (error) {
-      alert('Error checking blood inventory.');
-      this.editedStatus[logId] = this.originalStatus[logId];
     }
-  } 
-  else 
-  {
-    this.editedStatus[logId] = newStatus;
+    else
+    {
+      this.editedStatus[logId] = newStatus;
+    }
   }
-}
 
-
-  
-  canCancel(logId: number): boolean 
+  canCancel(logId: number): boolean
   {
     return this.editedStatus[logId] !== this.originalStatus[logId];
   }
 
-  
-  onCancel(logId: number): void {
+  onCancel(logId: number): void
+  {
     this.editedStatus[logId] = this.originalStatus[logId];
   }
 
-  
-  onConfirm(log: SupplyLog): void {
+  onConfirm(log: SupplyLog): void
+  {
     const updatedStatus = this.editedStatus[log.logId];
 
-    
-    if (updatedStatus === this.originalStatus[log.logId]) 
-      {
-        return;
-      }
+    if (updatedStatus === this.originalStatus[log.logId])
+    {
+      return;
+    }
 
-    const managedBy = localStorage.getItem('adminEmail') || ''; 
+    const managedBy = localStorage.getItem('adminEmail') || '';
 
-    
-    if (updatedStatus === 'IN-TRANSIT') 
-      {
-      const reduceRequest =
-       {
-          bloodGroup: log.bloodGroup,
-          unitsToReduce: log.unitsRequired
-        };
+    if (updatedStatus === 'IN-TRANSIT')
+    {
+      const reduceRequest = {
+        bloodGroup: log.bloodGroup,
+        unitsToReduce: log.unitsRequired
+      };
 
-     
       this.http.put(`${this.bloodApiBase}/reduce`, reduceRequest).subscribe({
-        next: () => 
-          {
-         
-            this.updateSupplyLogStatus(log, updatedStatus, managedBy);
-          },
-        error: (err) => {
+        next: () =>
+        {
+          this.updateSupplyLogStatus(log, updatedStatus, managedBy);
+        },
+        error: (err) =>
+        {
           alert(`Failed to reduce inventory: ${err.error || 'Unknown error'}`);
-          this.editedStatus[log.logId] = this.originalStatus[log.logId]; 
+          this.editedStatus[log.logId] = this.originalStatus[log.logId];
         }
       });
-    } 
+    }
     else
-     {
-        
-        this.updateSupplyLogStatus(log, updatedStatus, managedBy);
-      }
+    {
+      this.updateSupplyLogStatus(log, updatedStatus, managedBy);
+    }
   }
 
-  
-  private updateSupplyLogStatus(log: SupplyLog, updatedStatus: string, managedBy: string): void {
+  private updateSupplyLogStatus(log: SupplyLog, updatedStatus: string, managedBy: string): void
+  {
     const updatedLog = {
-      ...log, 
+      ...log,
       status: updatedStatus,
-      managedBy: managedBy 
+      managedBy: managedBy
     };
 
-  
     this.supplyLogService.updateSupplyLog(log.logId, updatedLog).subscribe({
-      next: (resp) => {
-        
+      next: (resp) =>
+      {
         this.originalStatus[log.logId] = resp.status;
         this.editedStatus[log.logId] = resp.status;
         this.showSuccessMessage = true;
         setTimeout(() => this.showSuccessMessage = false, 3000);
         this.errorMessage = null;
-        this.loadLogs(); 
+        this.loadLogs();
       },
-      error: () => {
+      error: () =>
+      {
         this.errorMessage = 'Failed to update the log.';
-        this.editedStatus[log.logId] = this.originalStatus[log.logId]; 
+        this.editedStatus[log.logId] = this.originalStatus[log.logId];
       }
     });
   }
 
-  
-  clearError(): void 
+  clearError(): void
   {
     this.errorMessage = null;
   }

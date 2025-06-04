@@ -1,6 +1,6 @@
 .section-container {
   padding: 30px;
-  color: #b71c1c;
+  /* color: #b71c1c; */
   min-height: 76.8vh;
   font-family: Arial, sans-serif;
   position: relative;
@@ -143,7 +143,7 @@
 .edit-button {
   position: absolute;
   top: 150px;
-  right: 300px;
+  right: 438px;
   background-color: #d32f2f;
   color: white;
   border: none;
@@ -177,8 +177,9 @@
 
 .change-password-button {
   position: absolute;
-  top: 220px;
-  right: 235px;
+  top: 503px;
+  /* right: 450px; */
+  left: 450px;
   background-color: #d32f2f;
   color: white;
   border: none;

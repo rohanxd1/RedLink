@@ -164,8 +164,10 @@
                   <td>{{ donor.donorPh }}</td>
                   <td>{{ donor.donorMail }}</td>
                   <td>{{ donor.donorAddress }}</td>
-                  <td><button class="edit-btn" (click)="openEditOverlay(donor)">Edit</button></td>
-                  <td><button class="delete-btn" (click)="openDeleteOverlay(donor)">Delete</button></td>
+                  
+                  <td><button class="primary-btn" (click)="openEditOverlay(donor)">Edit</button></td>
+                  <td><button class="primary-btn" (click)="openDeleteOverlay(donor)">Delete</button></td>
+                  
                 </tr>
               </tbody>
             </table>
